@@ -7,17 +7,17 @@ server.get('/log_in', function(req, res) {
   res.sendFile(pages + "/sign_in.html");
 });
 
-// server.get('/sign_up', function(req, res) {
-//   res.sendFile(pages + "/sign_up.html");
-// });
+server.get('/sign_up', function(req, res) {
+  res.sendFile(pages + "/sign_up.html");
+});
 
-// server.get('/home', function(req, res) {
-//   res.sendFile(pages + "/home.html");
-// });
+server.get('/sign_up/teacher', function(req, res) {
+  res.sendFile(pages + "/sign_up-teacher.html");
+});
 
-// server.get('/profile', function(req, res) {
-//   res.sendFile(pages + "/profile.html");
-// });
+server.get('/sign_up/student', function(req, res) {
+  res.sendFile(pages + "/sign_up-student.html");
+});
 
 const startServer = () => {
   server.listen(port, () => {

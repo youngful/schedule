@@ -1,0 +1,61 @@
+
+body {
+    max-height: 1vh;
+    color: #000;
+
+}
+
+h1{
+    font-size: 60px;
+    margin: 125px 0 65px 0;
+}
+
+h2{
+    font-size: 30px;
+    margin-bottom: 55px;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 580px;
+    padding: 0 10px;
+}
+
+.register-box{
+    width: 800px;
+    height: 1vh;
+    background-color: #fff;
+    margin-left: auto;
+}
+
+.title {
+    text-align: center;
+    color: #4e4e4e;
+}
+
+.sign_up-box{
+    text-align: center;
+    background-color: #fff;
+    padding: 90px 72px;
+    box-shadow: 0px 4px 50px 0px #00000026;
+    border-radius: 10px;
+}
+
+.btn{
+    font-size: 30px;
+    display: block;
+    margin-bottom: 50px;
+    background-color: #eee;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    color: #0080FF;
+    transition: all 0.7s;
+    text-decoration: none;
+}
+
+.btn:hover{
+    color: #fff;
+    background-color: #00229E;
+}
