@@ -19,6 +19,34 @@ server.get('/sign_up/student', function(req, res) {
   res.sendFile(pages + "/sign_up-student.html");
 });
 
+server.get('/reset_password', function(req, res) {
+  res.sendFile(pages + "/reset_password.html");
+});
+
+server.get('/', function(req, res) {
+  res.sendFile(pages + "/home.html");
+});
+
+server.get('/profile', function(req, res) {
+  res.sendFile(pages + "/profile.html");
+});
+
+server.get('/learning', function(req, res) {
+  res.sendFile(pages + "/learning.html");
+});
+
+server.get('/dashboard', function(req, res) {
+  res.sendFile(pages + "/dashboard.html");
+});
+
+server.get('/grades', function(req, res) {
+  res.sendFile(pages + "/grades.html");
+});
+
+server.get('/planner', function(req, res) {
+  res.sendFile(pages + "/planner.html");
+});
+
 const startServer = () => {
   server.listen(port, () => {
     console.log(`Server is running on port ${port}`);

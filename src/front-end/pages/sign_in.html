@@ -18,7 +18,7 @@
         </h1>
     
         <div class="login_box">
-            <form action="/login" method="post">
+            <form id="log_in-form">
                 <div class="form-group">
                     <input type="text" id="email" name="email" required placeholder=" ">
                     <span>Email</span>
@@ -30,7 +30,7 @@
                         <img id="eye-img" src="../images/icons/eye-closed.svg" alt="Show Password" style="width: 22px;">
                     </button>
                 </div>
-                <button class="btn" type="submit">Log in</button>
+                <button class="primary_btn btn" type="submit">Log in</button>
             </form>
     
             <p>Are you a new user? <a href="/sign_up">Register</a> </p>
@@ -40,5 +40,6 @@
 
 
     <script src="../scripts/sign_in.js"></script>
+    <script src="../scripts/global.js"></script>
 </body>
 </html>

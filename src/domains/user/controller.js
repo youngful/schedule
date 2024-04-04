@@ -13,7 +13,7 @@ const handleErrors = (err) => {
         errors.email = "That email is not registered";
     }
 
-    if (err.message === "incorrect password") {
+    if (err.message === "incorrect password" || err.massage === "password error") {
         errors.password = "That password is incorrect";
     }
 
@@ -38,6 +38,43 @@ const createToken = (id, age = maxAge) => {
         expiresIn: age,
     });
 };
+
+module.exports.get_info = async (req) => {
+    const token = req.cookies.jwt;
+
+    if (token) {
+        try {
+            const decodedToken = await new Promise((resolve, reject) => {
+                jwt.verify(token, process.env.SECRET_TOKEN, (err, decodedToken) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(decodedToken);
+                    }
+                });
+            });
+
+            const userId = decodedToken.id;
+            const user = await User.findById(userId);
+
+            // Створіть об'єкт з даними користувача, який ви хочете повернути
+            const userData = {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                // Додайте інші властивості користувача, які вам потрібні
+            };
+
+            return userData;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    } else {
+        return null;
+    }
+};
+
 
 module.exports.get_user_info = async (req) => {
     const token = req.cookies.jwt;
@@ -75,10 +112,11 @@ module.exports.login_get = (req, res) => {
 };
 
 module.exports.signup_post = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { personalCode, email, password } = req.body;
     
     try {
-        const user = await User.create({ firstName, lastName, email, password });
+
+        const user = await User.create({ personalCode, email, password });
         
         res.status(200).json({ message: "signed up" });
     } catch (err) {
