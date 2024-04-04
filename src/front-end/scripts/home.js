@@ -13,3 +13,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+$(document).ready(function() {
+    function loadDefaultContent() {
+        var defaultUrl = '/profile'; // URL сторінки профілю
+        loadContent(defaultUrl);
+    }
+
+    $('.sidebar-item').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).data('target');
+        loadContent(url);
+    });
+
+    function loadContent(url) {
+        $.get(url, function(data) {
+            $('.content').html(data);
+        });
+    }
+
+    loadDefaultContent();
+});

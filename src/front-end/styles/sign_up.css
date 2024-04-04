@@ -92,6 +92,10 @@ input[type="password"]:focus {
     background: #BAC8FF;
 }
 
+.form-group{
+    margin-bottom: 58px;
+}
+
 .form-group span {
     position: absolute;
     top: -25%;

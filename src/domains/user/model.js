@@ -5,10 +5,7 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  personalCode: {
-    type: Number,
-    required: true,
-  },
+  personalCode: Number,
   type:{
     type: String,
     default: "student"
@@ -20,6 +17,8 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [isEmail, "Please enter a valid email"],
   },
+  phone: String,
+  dateOfBirth: String,
   password: {
     type: String,
     required: [true, "Please enter a password"],

@@ -16,7 +16,7 @@
 
             <div class="profile_icon">
                 <img src="../images/icons/profile-icon.svg" alt="" style="width: 181px;">
-                <h2 class="user_name">Some User</h2>
+                <h2 class="user_name" id="user_name">Some User</h2>
             </div>
 
             <div class="user_info-box">
@@ -27,23 +27,34 @@
                             <span>Email</span>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="phone" name="phone" placeholder=" ">
+                            <input type="text" id="phone" name="phone" placeholder="+38 099 999 99 99">
                             <span>Phone Number</span>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="date" name="date" placeholder=" ">
+                            <input type="text" id="date" name="date" placeholder="dd.mm.yyyy">
                             <span>Date of birth</span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-upload">
                         <input type="file" id="file" name="file">
-                        <span>Upload File</span>
+                        <span>CV</span>
                     </div>
-                    <button class="primary_btn sign_btn" type="submit">Save changes</button>
+                    <div class="button-wrapper">
+                        <button class="primary_btn sign_btn" type="submit" id="saveBtn">Save changes</button>
+                        <button id="log_out" class="logout_btn" type="submit">Sign out</button>
+                    </div>
+
                 </form>
+
+
             </div>
+
         </div>
     </div>
+
+    <script src="../scripts/profile.js"></script>
 </body>
+
+
 
 </html>
