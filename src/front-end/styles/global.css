@@ -128,10 +128,57 @@ body{
     background-color: #f5f5f5;
 }
 
+button{
+    cursor: pointer;
+}
+
 
 .logo{
     width: 127px;
     position: absolute;
     top: 40px;
     left: 40px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 58px;
+    font-size: 25px;
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.primary_btn{
+    background: #5D7CFB;
+    height: 65px;
+    font-size: 25px;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    transition: all 0.5s;
+}
+
+.primary_btn:hover{
+    box-shadow: 0px 4px 20px 0px #5D7CFBB2;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    border-radius: 10px;
 }

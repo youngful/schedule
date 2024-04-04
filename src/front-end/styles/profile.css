@@ -1,0 +1,59 @@
+
+.profile_icon{
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.info_wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 49px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    border-radius: 10px;
+    line-height: 64px;
+    width: calc(100% - 5px);
+    padding: 0 10px;
+    border: 0.5px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border: 1px solid #5D7CFB; 
+}
+
+.form-group{
+    max-width: 402px;
+    width: 100%;
+    position: relative;
+}
+
+.form-group span {
+    position: absolute;
+    top: -25%;
+    left: 10px;
+    color: #999;
+    background-color: #fff;
+    padding: 0 24px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    margin-bottom: 58px;
+    font-size: 25px;
+}
+
+input:focus + span,
+input:not(:placeholder-shown) + span {
+    color: #333;
+}
+
+.password-group {
+    position: relative;
+}

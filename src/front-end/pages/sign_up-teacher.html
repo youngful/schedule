@@ -1,1 +1,63 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/sign_up.css">
+    <link rel="stylesheet" href="../styles/sign_up-student.css">
+    <title>Schedule</title>
+</head>
+
+<body>
+    <a href="/" class="logo"><img src="../images/icons/logo.svg" alt=""></a>
+
+    <div class="register-box">
+        <h2 class="title">Register as Teacher</h2>
+
+        <form id="sign_up-teacher" class="sign_up-form">
+            <div class="form-group">
+                <input type="text" id="lastName" name="lastName" required placeholder=" ">
+                <span>Last Name</span>
+            </div>
+            <div class="form-group">
+                <input type="text" id="firstName" name="firstName" required placeholder=" ">
+                <span>First Name</span>
+            </div>
+            <div class="form-group">
+                <input type="text" id="email" name="email" required placeholder=" ">
+                <span>Email</span>
+            </div>
+            <div class="form-group password-group">
+                <input type="password" id="password" name="password" required placeholder=" ">
+                <span>Password</span>
+                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                    <img id="password-img" src="../images/icons/eye-closed.svg" alt="Show Password"
+                        style="width: 22px;">
+                </button>
+            </div>
+            <div class="form-group password-group">
+                <input type="password" id="confirmPassword" name="password" required placeholder=" ">
+                <span>Confirm Password</span>
+                <button type="button" class="toggle-password" onclick="toggleConfirmPasswordVisibility()">
+                    <img id="confirmPassword-img" src="../images/icons/eye-closed.svg" alt="Show Password"
+                        style="width: 22px;">
+                </button>
+            </div>
+            <button class="sign_btn primary_btn" type="submit">Sign up</button>
+
+            <p>Already have account?<a href="/log_in"> Log in</a></p>
+        </form>
+
+        
+    </div>
+
+
+    <script src="../scripts/sign_up.js"></script>
+    <script src="../scripts/sign_up-teacher.js"></script>
+    <script src="../scripts/global.js"></script>
+</body>
+
+</html>

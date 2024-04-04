@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/home.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul class="sidebar-list">
+                <li class="sidebar-item"><a href="/profile" target="contentFrame">Profile</a></li>
+                <li class="sidebar-item active"><a href="/learning" target="contentFrame">My Learning</a></li>
+                <li class="sidebar-item"><a href="/dashboard" target="contentFrame">Dashboard</a></li>
+                <li class="sidebar-item"><a href="/grades" target="contentFrame">Grades</a></li>
+                <li class="sidebar-item"><a href="/planner" target="contentFrame">Planner</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <iframe name="contentFrame" frameborder="0" width="100%" height="100%" src="/profile"></iframe>
+        </div>
+    </div>
+    <script src="../scripts/global.js"></script>
+    <script src="../scripts/home.js"></script>
+</body>
+
+</html>

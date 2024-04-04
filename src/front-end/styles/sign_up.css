@@ -1,8 +1,7 @@
 
 body {
-    max-height: 1vh;
+    min-height: 1vh;
     color: #000;
-
 }
 
 h1{
@@ -12,25 +11,42 @@ h1{
 
 h2{
     font-size: 30px;
-    margin-bottom: 55px;
 }
 
 .container {
     margin: 0 auto;
-    max-width: 580px;
+    max-width: 600px;
     padding: 0 10px;
 }
 
 .register-box{
-    width: 800px;
-    height: 1vh;
+    max-width: 800px;
+    min-height: 100vh;
     background-color: #fff;
     margin-left: auto;
+    box-shadow: 0px 4px 50px 0px #00000026;
+    display: flex;
+    gap: 100px;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .title {
+    font-family: "Vindea";
+    font-size: 60px;
+    font-weight: 400;
+    justify-content: center;
+    gap: 18px;
+    align-items: center;
+    display: flex;
+}
+
+.sign_up-form{
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
     text-align: center;
-    color: #4e4e4e;
 }
 
 .sign_up-box{
@@ -38,7 +54,23 @@ h2{
     background-color: #fff;
     padding: 90px 72px;
     box-shadow: 0px 4px 50px 0px #00000026;
-    border-radius: 10px;
+    border-radius: 30px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 22px);
+    height: 43px;
+    padding: 10px;
+    border: 0.5px solid #ccc;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border: 1px solid #5D7CFB; 
 }
 
 .btn{
@@ -50,12 +82,33 @@ h2{
     padding: 10px;
     border-radius: 10px;
     border: none;
-    color: #0080FF;
+    color: #5D7CFB;
     transition: all 0.7s;
     text-decoration: none;
 }
 
 .btn:hover{
-    color: #fff;
-    background-color: #00229E;
+    color: #1018D0;
+    background: #BAC8FF;
+}
+
+.form-group span {
+    position: absolute;
+    top: -25%;
+    left: 10px;
+    color: #999;
+    background-color: #fff;
+    padding: 0 24px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+input:focus + span,
+input:not(:placeholder-shown) + span {
+    color: #333;
+}
+
+.sign_btn{
+    width: calc(100% - 160px);
+    margin-bottom: 24px;
 }
