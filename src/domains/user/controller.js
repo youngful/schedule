@@ -1,6 +1,7 @@
 require("dotenv").config();
 const User = require("./model");
 const jwt = require("jsonwebtoken");
+const Group = require("../group/model")
 
 
 // handle errors
@@ -116,12 +117,19 @@ module.exports.signup_post = async (req, res) => {
     
     try {
 
-        const user = await User.create({ personalCode, email, password });
-        
-        res.status(200).json({ message: "signed up" });
+        const group = await Group.findOne({ code: personalCode });
+
+        if (group) {
+            const user = await User.create({ personalCode, email, password });
+            group.students.push(user); 
+            await group.save(); ç
+            return res.status(200).json({ message: "signed up" });
+        } else {
+            return res.status(400).json({ message: "Group not found for the provided personal code" });
+        }
     } catch (err) {
         const errors = handleErrors(err);
-        res.status(400).json({ errors });
+        return res.status(400).json({ errors });
     }
 };
 
