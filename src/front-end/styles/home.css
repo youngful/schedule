@@ -13,13 +13,13 @@ a{
     max-width: 853px;
     margin: 59px;
     width: 100%;
+    margin: 48px 59px 67px 59px;
 }
 
 .wrapper{
     display: flex;
-    gap: 64px;
+    gap: 59px;
     min-height: 100vh;
-    height: 100%;
 }
 
 .sidebar{
@@ -56,6 +56,7 @@ a{
     background-color: #fff;
     border-radius: 30px;
     padding: 5px ;
-    margin-right: 10px;
-    margin-top: 64px;
+    margin-top: 10px;
+    height: fit-content;
 }
+

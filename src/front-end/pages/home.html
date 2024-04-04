@@ -13,18 +13,19 @@
     <div class="wrapper">
         <div class="sidebar">
             <ul class="sidebar-list">
-                <li class="sidebar-item"><a href="/profile" target="contentFrame">Profile</a></li>
-                <li class="sidebar-item active"><a href="/learning" target="contentFrame">My Learning</a></li>
-                <li class="sidebar-item"><a href="/dashboard" target="contentFrame">Dashboard</a></li>
-                <li class="sidebar-item"><a href="/grades" target="contentFrame">Grades</a></li>
-                <li class="sidebar-item"><a href="/planner" target="contentFrame">Planner</a></li>
+                <li class="sidebar-item" data-target="/profile"><a href="#">Profile</a></li>
+                <li class="sidebar-item active" data-target="/learning"><a href="#">My Learning</a></li>
+                <li class="sidebar-item" data-target="/dashboard"><a href="#">Dashboard</a></li>
+                <li class="sidebar-item" data-target="/grades"><a href="#">Grades</a></li>
+                <li class="sidebar-item" data-target="/planner"><a href="#">Planner</a></li>
             </ul>
         </div>
 
         <div class="content">
-            <iframe name="contentFrame" frameborder="0" width="100%" height="100%" src="/profile"></iframe>
+
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../scripts/global.js"></script>
     <script src="../scripts/home.js"></script>
 </body>

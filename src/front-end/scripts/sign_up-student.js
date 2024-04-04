@@ -23,12 +23,13 @@ document.getElementById('sign_up-student').addEventListener('submit', async func
         });
 
         if (!response.ok) {
-            throw new Error('Sign up failed.');
+            throw new Error('Check your data.');
         }
 
         window.location.href = '/log_in'; 
 
     } catch (error) {
+        alert(error)
         console.error('Sign up error:', error);
     }
 });

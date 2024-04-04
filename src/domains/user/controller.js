@@ -40,7 +40,7 @@ const createToken = (id, age = maxAge) => {
     });
 };
 
-module.exports.get_info = async (req) => {
+module.exports.get_info = async (req, res) => {
     const token = req.cookies.jwt;
 
     if (token) {
@@ -58,24 +58,24 @@ module.exports.get_info = async (req) => {
             const userId = decodedToken.id;
             const user = await User.findById(userId);
 
-            // Створіть об'єкт з даними користувача, який ви хочете повернути
             const userData = {
                 id: user._id,
-                name: user.name,
+                dateOfBirth: user.dateOfBirth,
                 email: user.email,
-                // Додайте інші властивості користувача, які вам потрібні
+                phone: user.phone,
+                name: user.name,
+                lastName: user.lastName
             };
 
-            return userData;
+            res.json(userData); 
         } catch (error) {
             console.error(error);
-            return null;
+            res.status(500).json({ error: 'Server error' });
         }
     } else {
-        return null;
+        res.status(401).json({ error: 'Unauthorized' });
     }
 };
-
 
 module.exports.get_user_info = async (req) => {
     const token = req.cookies.jwt;
@@ -104,6 +104,25 @@ module.exports.get_user_info = async (req) => {
     }
 };
 
+module.exports.update_info = async (req, res) => {
+    const { email, phone, dateOfBirth } = req.body;
+
+    try {
+        const user = await this.get_user_info(req);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        await User.findByIdAndUpdate(user._id, { email, phone, dateOfBirth });
+
+        return res.status(200).json({ message: 'User data updated successfully.' });
+    } catch (error) {
+        console.error('Error updating user data:', error);
+        return res.status(500).json({ message: 'Failed to update user data.' });
+    }
+};
+
 module.exports.signup_get = (req, res) => {
     res.json({ message: "signup" });
 };
@@ -116,17 +135,22 @@ module.exports.signup_post = async (req, res) => {
     const { personalCode, email, password } = req.body;
     
     try {
+        if(personalCode){
+            const group = await Group.findOne({ code: personalCode });
 
-        const group = await Group.findOne({ code: personalCode });
-
-        if (group) {
-            const user = await User.create({ personalCode, email, password });
-            group.students.push(user); 
-            await group.save(); ç
-            return res.status(200).json({ message: "signed up" });
-        } else {
-            return res.status(400).json({ message: "Group not found for the provided personal code" });
+            if (group) {
+                const user = await User.create({ personalCode, email, password });
+                group.students.push(user); 
+                await group.save(); ç
+                return res.status(200).json({ message: "signed up" });
+            } else {
+                return res.status(400).json({ message: "Group not found for the provided personal code" });
+            }
         }
+        
+        const user = await User.create({ email, password });
+        return res.status(200).json({ message: "signed up" });
+        
     } catch (err) {
         const errors = handleErrors(err);
         return res.status(400).json({ errors });

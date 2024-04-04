@@ -8,6 +8,7 @@ const {
   login_post,
   logout_get,
   get_info,
+  update_info
 } = require("./controller");
 
 routes.get("/signup", signup_get);
@@ -18,6 +19,7 @@ routes.get("/get_info", get_info)
 
 routes.post("/sign_up", signup_post);
 routes.post("/log_in", login_post);
+routes.post("/update_info", update_info);
 
 
 

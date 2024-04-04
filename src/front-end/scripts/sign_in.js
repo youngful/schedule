@@ -31,12 +31,15 @@ document.getElementById('log_in-form').addEventListener('submit', async function
         });
 
         if (!response.ok) {
-            throw new Error('Log ip failed.');
+            throw new Error('Wrong your email or password.');
         }
+
+
 
         window.location.href = '/'; 
 
     } catch (error) {
+        alert(error)
         console.error('Sign up error:', error);
     }
 });
