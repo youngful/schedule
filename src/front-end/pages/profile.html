@@ -36,9 +36,27 @@
                         </div>
                     </div>
                     <div class="form-upload">
-                        <input type="file" id="file" name="file">
-                        <span>CV</span>
+                        <form id="updateForm" enctype="multipart/form-data">
+                            <input type="file" id="file" name="file" accept=".doc, .docx, .pdf, .zip">
+                            <label class="custom-file-upload" id="custom-file-upload">
+                                <img src="../images/icons/doc.svg" alt="File Icon" id="file-icon" style="display:none;"><br>
+                                <span id="file_sub-title"></span>
+                            </label>
+                            <span id="file_title">CV</span>
+                        </form>
                     </div>
+
+                    <div class="file-window" id="file-window">
+                        <div class="file-name_wrapper">
+                            <span>Name: </span>
+                            <input type="text" class="file-name-input" id="file-name-input" placeholder="">
+                        </div>
+                        <div class="file_button-wrapper">
+                            <button class="file-button" id="delete-button">Delete</button>
+                            <button class="file-button primary_btn" id="save-button">Save</button>
+                        </div>
+                    </div>
+
                     <div class="button-wrapper">
                         <button class="primary_btn sign_btn" type="submit" id="saveBtn">Save changes</button>
                         <button id="log_out" class="logout_btn" type="submit">Sign out</button>

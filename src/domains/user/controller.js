@@ -2,7 +2,11 @@ require("dotenv").config();
 const User = require("./model");
 const jwt = require("jsonwebtoken");
 const Group = require("../group/model")
-
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');
+const mkdirAsync = promisify(fs.mkdir);
+const multer = require('multer');
 
 // handle errors
 const handleErrors = (err) => {
@@ -64,7 +68,8 @@ module.exports.get_info = async (req, res) => {
                 email: user.email,
                 phone: user.phone,
                 name: user.name,
-                lastName: user.lastName
+                lastName: user.lastName,
+                file: user.file
             };
 
             res.json(userData); 
@@ -105,21 +110,21 @@ module.exports.get_user_info = async (req) => {
 };
 
 module.exports.update_info = async (req, res) => {
-    const { email, phone, dateOfBirth } = req.body;
+    const { email, phone, dateOfBirth, fileName } = req.body;
 
     try {
         const user = await this.get_user_info(req);
         
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'Користувача не знайдено.' });
         }
 
-        await User.findByIdAndUpdate(user._id, { email, phone, dateOfBirth });
+        await User.findByIdAndUpdate(user._id, { email, phone, dateOfBirth, file: fileName });
 
-        return res.status(200).json({ message: 'User data updated successfully.' });
+        return res.status(200).json({ message: 'Дані користувача успішно оновлені.' });
     } catch (error) {
-        console.error('Error updating user data:', error);
-        return res.status(500).json({ message: 'Failed to update user data.' });
+        console.error('Помилка при оновленні даних користувача:', error);
+        return res.status(500).json({ message: 'Не вдалося оновити дані користувача.' });
     }
 };
 
@@ -141,15 +146,29 @@ module.exports.signup_post = async (req, res) => {
             if (group) {
                 const user = await User.create({ personalCode, email, password });
                 group.students.push(user); 
-                await group.save(); ç
+                await group.save();
                 return res.status(200).json({ message: "signed up" });
             } else {
                 return res.status(400).json({ message: "Group not found for the provided personal code" });
             }
+        }else{
+            const user = await User.create({ email, password });
+
+            const userId = user._id.toString();
+            const userFolderPath = path.join(__dirname, '..', 'uploads', userId);
+            
+    
+            if (!fs.existsSync(userFolderPath)) {
+                await mkdirAsync(userFolderPath);
+                user.folderSRC = userFolderPath;
+                await user.save();
+            } else {
+                await User.findByIdAndDelete(user._id);
+                return res.status(400).json({ message: "Failed to create user directory" });
+            }
+    
+            return res.status(200).json({ message: "signed up" });
         }
-        
-        const user = await User.create({ email, password });
-        return res.status(200).json({ message: "signed up" });
         
     } catch (err) {
         const errors = handleErrors(err);

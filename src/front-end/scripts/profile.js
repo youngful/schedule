@@ -1,6 +1,6 @@
 async function fetchUserData() {
     try {
-        
+
         const response = await fetch('http://localhost:3001/user/get_info', {
             credentials: 'include'
         });
@@ -16,7 +16,41 @@ async function fetchUserData() {
         document.getElementById('date').value = userData.dateOfBirth;
         document.getElementById('user_name').value = userData.name + userData.lastName;
 
-        // document.getElementById('file').value = userData.filePath;
+        var fileInput = document.getElementById('file');
+        var fileIconElement = document.getElementById('file-icon');
+        var fileTitle = document.getElementById('file_title');
+        const fileSubTitle = document.getElementById('file_sub-title');
+
+        if (userData.file) {
+
+            var file = userData.file;
+            var fileType = getFileType(file);
+            fileSubTitle.innerHTML = file;
+
+            switch (fileType) {
+                case 'doc':
+                case 'docx':
+                    fileIconElement.src = '../images/icons/doc.svg';
+                    break;
+                case 'pdf':
+                    fileIconElement.src = '../images/icons/pdf.svg';
+                    break;
+                case 'zip':
+                    fileIconElement.src = '../images/icons/zip.svg';
+                    break;
+                default:
+                    fileIconElement.src = '../images/icons/doc.svg';
+            }
+            fileIconElement.style.display = 'inline-block';
+            fileIconElement.style.margin = '13px 0 0 30px';
+            fileInput.style.display = "none";
+            fileTitle.style.top = "-30px";
+            fileTitle.style.left = "-25px";
+            fileTitle.style.backgroundColor = "none";
+
+
+        }
+
     } catch (error) {
         console.error('Error fetching user data:', error);
     }
@@ -25,12 +59,14 @@ async function fetchUserData() {
 fetchUserData();
 
 
-document.getElementById('saveBtn').addEventListener('click', async function(event) {
+document.getElementById('saveBtn').addEventListener('click', async function (event) {
     event.preventDefault();
 
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
     const dateOfBirth = document.getElementById('date').value;
+    const fileInput = document.getElementById('file');
+    const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
 
     try {
         const response = await fetch('http://localhost:3001/user/update_info', {
@@ -39,7 +75,7 @@ document.getElementById('saveBtn').addEventListener('click', async function(even
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, phone, dateOfBirth })
+            body: JSON.stringify({ email, phone, dateOfBirth, fileName })
         });
 
         if (!response.ok) {
@@ -51,7 +87,95 @@ document.getElementById('saveBtn').addEventListener('click', async function(even
         console.error('Error updating user data:', error);
         alert('Failed to update user data. Please try again later.');
     }
-})
+});
+
+document.getElementById('file').addEventListener('change', function () {
+    var fileInput = this;
+    var fileIconElement = document.getElementById('file-icon');
+    var fileTitle = document.getElementById('file_title');
+    var fileSubTitle = document.getElementById('file_sub-title');
+
+    if (fileInput.files && fileInput.files[0]) {
+        var file = fileInput.files[0];
+        var fileType = getFileType(file.name);
+        fileSubTitle.innerHTML = file.name;
+
+        switch (fileType) {
+            case 'doc':
+            case 'docx':
+                fileIconElement.src = '../images/icons/doc.svg';
+                break;
+            case 'pdf':
+                fileIconElement.src = '../images/icons/pdf.svg';
+                break;
+            case 'zip':
+                fileIconElement.src = '../images/icons/zip.svg';
+                break;
+            default:
+                fileIconElement.src = '../images/icons/doc.svg';
+        }
+
+
+        fileIconElement.style.display = 'inline-block';
+        fileIconElement.style.margin = '13px 0 0 30px';
+        fileInput.style.display = "none";
+        fileTitle.style.top = "-30px";
+        fileTitle.style.left = "-25px";
+        fileTitle.style.backgroundColor = "none";
+    }
+});
+
+function getFileType(fileName) {
+    var extension = fileName.split('.').pop().toLowerCase();
+    switch (extension) {
+        case 'doc':
+        case 'docx':
+        case 'pdf':
+        case 'zip':
+            return extension;
+        default:
+            return 'default';
+    }
+}
+
+document.getElementById('file-icon').addEventListener('click', function () {
+    var fileWindow = document.getElementById('file-window');
+    var inPut = document.getElementById('file-name-input');
+    var saveButton = document.getElementById('save-button');
+    var deleteButton = document.getElementById('delete-button');
+    var fileSubTitle = document.getElementById('file_sub-title');
+    const fileInput = document.getElementById('file');
+
+    
+
+    fileWindow.style.display = 'block';
+
+    inPut.value = fileSubTitle.innerText;
+
+    saveButton.addEventListener('click', saveFile);
+    deleteButton.addEventListener('click', deleteFile);
+
+    function saveFile() {
+        
+        var newName = document.getElementById('file-name-input').value;
+
+        fileSubTitle.innerHTML = newName;
+        fileInput.files[0].name = newName;
+
+        fileWindow.style.display = 'none';
+    }
+
+    function deleteFile() {
+
+        var fileInput = document.getElementById('file');
+        var fileSubTitle = document.getElementById('file_sub-title');
+
+        fileSubTitle.innerHTML = "";
+        document.getElementById("custom-file-upload").style.display = "none";
+        fileInput.style.display = "block";
+        fileWindow.style.display = 'none';
+    }
+});
 
 
 $(document).ready(function () {
@@ -98,10 +222,10 @@ $(document).ready(function () {
     });
 });
 
-document.getElementById('log_out').addEventListener('click', async function(event) {
+document.getElementById('log_out').addEventListener('click', async function (event) {
     event.preventDefault();
 
-    try{
+    try {
         const response = await fetch('http://localhost:3001/user/log_out', {
             credentials: 'include'
         });
@@ -110,7 +234,7 @@ document.getElementById('log_out').addEventListener('click', async function(even
             throw new Error('Failed to log out');
         }
 
-        window.location.href = '/log_in'; 
+        window.location.href = '/log_in';
     } catch (error) {
         console.error('Error fetching user data:', error);
     }

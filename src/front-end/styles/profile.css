@@ -1,50 +1,60 @@
-
-.profile_icon{
+.profile_icon {
     display: flex;
     gap: 48px;
     align-items: center;
     margin-bottom: 80px;
 }
 
-.info_wrapper{
+.container{
+    max-width: 971px;
+    width: 130%;
+    padding: 48px 59px 67px 59px;
+    background-color: #fff;
+    border-radius: 30px;
+    background-color: #fff;
+}
+
+.profile_box {
+    position: relative;
+}
+
+#user_info_form {
+    position: relative;
+}
+
+.info_wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 49px;
     margin-bottom: 84px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
 input[type="file"] {
     border-radius: 10px;
     line-height: 64px;
     width: calc(100% - 21px);
     padding: 0 10px;
     border: 0.5px solid #ccc;
-    border-radius: 10px;
     outline: none;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
-    border: 1px solid #5D7CFB; 
+    border: 1px solid #5D7CFB;
 }
 
-input[type="file"]{
-    line-height: 128px;
-    width: 100%;
-}
-
-.form-upload{
+.form-upload {
     max-width: 853px;
     width: 100%;
     position: relative;
     margin-bottom: 60px;
 }
 
-.form-upload span{
+#file_title {
     position: absolute;
     top: -12%;
     left: 10px;
@@ -56,7 +66,7 @@ input[type="file"]{
     font-size: 25px;
 }
 
-.form-group{
+.form-group {
     max-width: 402px;
     width: 100%;
     position: relative;
@@ -75,8 +85,8 @@ input[type="file"]{
     font-size: 25px;
 }
 
-input:focus + span,
-input:not(:placeholder-shown) + span {
+input:focus+span,
+input:not(:placeholder-shown)+span {
     color: #333;
 }
 
@@ -84,13 +94,13 @@ input:not(:placeholder-shown) + span {
     position: relative;
 }
 
-.sign_btn{
+.sign_btn {
     max-width: 299px;
     width: 100%;
 
 }
 
-.logout_btn{
+.logout_btn {
     border-radius: 30px;
     background-color: transparent;
     border: 1px solid #5D7CFB;
@@ -103,4 +113,73 @@ input:not(:placeholder-shown) + span {
 .button-wrapper {
     display: flex;
     gap: 24px;
+}
+
+#file {
+    line-height: 128px;
+}
+
+#file_sub-title {
+    margin-left: 38px;
+}
+
+.file-window {
+    position: absolute;
+    font-size: 24px;
+    max-width: 500px;
+    width: 100%;
+    height: 376px;
+    background-color: #fff;
+    box-shadow: 0px 4px 30px 0px #00000033;
+    border-radius: 20px;
+    border: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.file-name_wrapper{
+    margin: 64px 32px 48px;
+}
+
+.file-name-input{
+    width: calc(100% - 120px);
+    padding: 5px;
+    line-height: 36px;
+    margin-left: 34px;
+    font-size: 24px;
+    border-radius: 20px;
+    border: 1px solid #000;
+}
+
+.file-name-input:focus,
+.file-name-input:not(:placeholder-shown) {
+    border: 1px solid #0957EF;
+}
+
+.file_button-wrapper{
+    margin: 0 32px 64px;
+}
+
+.file-button{
+    width: 100%;
+    border: none;
+    line-height: 64px;
+    border-radius: 20px;
+}
+
+.file-button:first-child{
+    margin-bottom: 24px;
+}
+
+#delete-button{
+    background-color: #EBECED;
+    font-size: 24px;
+    color: #5D7CFB;
+    transition: all 0.5s;
+}
+
+#delete-button:hover{
+    background-color: #BAC8FF;
 }
