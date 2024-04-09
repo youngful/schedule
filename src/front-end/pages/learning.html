@@ -4,16 +4,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
     <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="../styles/learning.css">
     <title>Schedule</title>
 </head>
 
 <body>
 
     <div class="container">
-        <h2>My learning</h2>
-        <p>Тут може бути список курсів, до яких користувач має доступ, або будь-яка інша інформація про навчання.</p>
+        <div class="header">
+            <div class="profile">
+                <img src="../images/icons/profile-icon.svg" alt="" style="width: 96px;">
+                <h2 class="user_name" id="user_name">Some User</h2>
+            </div>
+
+            <div class="panel">
+                <a href="/tasks" class="panel_btn">
+                    <div class="panel_content">
+                        <svg class="panel_img" width="59" height="59" viewBox="0 0 59 59" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect width="58.2583" height="58.2583" rx="20" fill="#5D7CFB" />
+                            <path d="M13.4443 20.4464L15.9651 23.2473L22.4072 16.8053" stroke="white" stroke-width="4"
+                                stroke-linecap="round" />
+                            <path d="M13.4443 38.9323L15.9651 41.7331L22.4072 35.2911" stroke="white" stroke-width="4"
+                                stroke-linecap="round" />
+                            <path d="M35 20L45 20" stroke="white" stroke-width="4" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M35 39L45 39" stroke="white" stroke-width="4" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+
+                        <span>Tasks<br><span class="counter" id="task_counter">0</span></span>
+                    </div>
+
+                </a>
+                <a href="/active" class="panel_btn">
+                    <div class="panel_content">
+                        <svg class="panel_img" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M58 29C58 45.0163 45.0163 58 29 58C12.9837 58 0 45.0163 0 29C0 12.9837 12.9837 0 29 0C45.0163 0 58 12.9837 58 29Z" fill="#5D7CFB" />
+                            <path d="M29 10.5V29L17 41" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <span>Active<br><span class="counter" id="active_counter">0</span></span>
+                    </div>
+                </a>
+                <button id="add_course"><img src="../images/icons/add.svg" alt=""></button>
+            </div>
+
+        </div>
+
+        <div class="slider-wrapper">
+            <div class="slider">
+                <div class="slider-block">
+                    <h3 class="block-title">UI|UX Design Self-Paced [Junior]</h3>
+                    <h4 class="block-sub_title">Figma Practice</h4>
+                    <h5 class="block-end_date"> </h5>
+
+                    <span class="progress">30</span>% passed
+                    <div class="progress_scale">
+                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
+                        </svg>
+
+                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
+                        </svg>
+
+                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
+                        </svg>
+
+                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
+                        </svg>
+
+                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
+                        </svg>
+
+                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="slider-block">Блок 2</div>
+                <div class="slider-block">Блок 3</div>
+                <div class="slider-block">Блок 4</div>
+                <div class="slider-block">Блок 5</div>
+                <div class="slider-block">Блок 6</div>
+                <div class="slider-block">Блок 7</div>
+            </div>
+            <div class="pagination-wrapper">
+                <span class="page-numbers prev-page">01</span>
+                <div class="slider-pagination">
+                    <div class="slider-pagination-line"></div>
+                </div>
+                <span class="page-numbers next-page"></span>
+            </div>
+        </div>
+
+
+        <div class="learning-info">
+            <div class="learning-box upcoming">
+                <div class="box-title_wrapper">
+                    <img src="../images/icons/tasks2.svg" alt="" style="width: 58px;">
+                    <h3 class="learning-box_title">Upcoming Tasks</h3>
+                </div>
+
+                <div class="task-box">
+                    <div class="box-item">
+                        <h3 class="box-item_title">d</h3>
+                        <span class="box-item_dueDate">d</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learning-box overdue">
+                <div class="box-title_wrapper">
+                    <img src="../images/icons/clock2.svg" alt="" style="width: 58px;">
+                    <h3 class="learning-box_title">Overdue Tasks</h3>
+                </div>
+
+                <div class="task-box">
+                    <div class="box-item">
+                        <h3 class="box-item_title">d</h3>
+                        <span class="box-item_dueDate">d</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
     </div>
+
+    <script src="../scripts/learning.js"></script>
 </body>
 
 </html>

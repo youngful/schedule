@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   personalCode: Number,
+  folderSRC: String,
+  file: String,
   type:{
     type: String,
     default: "student"
