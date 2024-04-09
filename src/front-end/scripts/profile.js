@@ -66,7 +66,21 @@ document.getElementById('saveBtn').addEventListener('click', async function (eve
     const phone = document.getElementById('phone').value;
     const dateOfBirth = document.getElementById('date').value;
     const fileInput = document.getElementById('file');
-    const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
+    var fileName = '';
+
+    if(document.getElementById('file_sub-title')){
+        fileName = document.getElementById('file_sub-title').innerText;
+        console.log(fileName);
+    } else if (fileInput.files[0]) {
+        fileName = fileInput.files[0].name;
+        console.log(fileName);
+
+    }else{
+        fileName = '';
+        console.log(fileName);
+
+    }
+
 
     try {
         const response = await fetch('http://localhost:3001/user/update_info', {
@@ -160,7 +174,7 @@ document.getElementById('file-icon').addEventListener('click', function () {
         var newName = document.getElementById('file-name-input').value;
 
         fileSubTitle.innerHTML = newName;
-        fileInput.files[0].name = newName;
+        // fileInput.files[0].name = newName;
 
         fileWindow.style.display = 'none';
     }
@@ -198,10 +212,8 @@ $(document).ready(function () {
     $('#phone').on('input', function () {
         var val = $(this).val();
 
-        // Видаляємо всі символи, крім цифр та "+"
         var numericVal = val.replace(/[^\d+]/g, '');
 
-        // Визначаємо формат номера телефону
         var formattedVal = '';
         for (var i = 0; i < numericVal.length; i++) {
             if (i === 3) {
@@ -215,7 +227,6 @@ $(document).ready(function () {
 
         $(this).val(formattedVal);
     }).on('keydown', function (e) {
-        // Дозволяємо вводити тільки цифри та спеціальні клавіші
         if (!(e.key.match(/[0-9+]/) || e.key === 'Backspace' || e.key === 'Delete' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Tab')) {
             e.preventDefault();
         }
