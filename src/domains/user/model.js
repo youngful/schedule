@@ -5,7 +5,9 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  personalCode: Number,
+  personalCode: [{ 
+    type: Number,
+  }],
   folderSRC: String,
   file: String,
   type:{
@@ -55,7 +57,6 @@ userSchema.statics.login = async function (email, password) {
   }
   throw Error("incorrect email");
 };
-
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;

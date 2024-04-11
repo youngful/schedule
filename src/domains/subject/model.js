@@ -5,11 +5,16 @@ const subjectSchema = new mongoose.Schema({
 
     name: String,
 
-    grade:[{
+    tasks:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
+    }],
+
+    gradeAVG:{
         type: Number,
         min: 0,
         max: 100
-    }]
+    }
 
 });
 

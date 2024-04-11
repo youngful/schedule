@@ -1,29 +1,32 @@
 const mongoose = require("mongoose");
-const Student = require("../user/model")
-const Teacher = require("../teacher/model")
 
 const groupSchema = new mongoose.Schema({
-    code: Number,
-    name: String,
-    students:{
-        type: [Student.schema],
-        reaqired: false
+    code: {
+        type: Number,
+        unique: true, 
+        required: true 
     },
-    teacher:{
-        type: Student.schema,
-        reaqired: false
+    name: String,
+    dueDate:{
+        type: Date,
+        default: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
+    },
+    subject:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject'
+    }],
+    students: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Student'
+    }],
+    teacher: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Teacher'
     }
 });
-
 
 const Group = mongoose.model("group", groupSchema);
 
 module.exports = Group;
 
 
-//в subject
-// grade: [{
-//     type: Number,
-//     min: 0,
-//     max: 100
-// }]

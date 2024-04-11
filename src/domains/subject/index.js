@@ -2,10 +2,10 @@ const express = require("express");
 const routes = express.Router();
 
 const {
-  create_subject
+  add_task
 } = require("./controller");
 
-routes.post("/create_subject", create_subject);
+routes.post("/add_task", add_task);
 
 
 

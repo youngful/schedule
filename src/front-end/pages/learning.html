@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
     <link rel="stylesheet" href="../styles/home.css">
     <link rel="stylesheet" href="../styles/learning.css">
     <title>Schedule</title>
@@ -57,52 +55,9 @@
 
         </div>
 
-        <div class="slider-wrapper">
-            <div class="slider">
-                <div class="slider-block">
-                    <h3 class="block-title">UI|UX Design Self-Paced [Junior]</h3>
-                    <h4 class="block-sub_title">Figma Practice</h4>
-                    <h5 class="block-end_date"> </h5>
-
-                    <span class="progress">30</span>% passed
-                    <div class="progress_scale">
-                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
-                        </svg>
-
-                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
-                        </svg>
-
-                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
-                        </svg>
-
-                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
-                        </svg>
-
-                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
-                        </svg>
-
-                        <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="16" r="16" fill="#EEEEEE" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="slider-block">Блок 2</div>
-                <div class="slider-block">Блок 3</div>
-                <div class="slider-block">Блок 4</div>
-                <div class="slider-block">Блок 5</div>
-                <div class="slider-block">Блок 6</div>
-                <div class="slider-block">Блок 7</div>
+        <div class="slider-wrapper hidden">
+            <div class="slider" id="slider">
+                
             </div>
             <div class="pagination-wrapper">
                 <span class="page-numbers prev-page">01</span>
@@ -122,9 +77,8 @@
                 </div>
 
                 <div class="task-box">
-                    <div class="box-item">
-                        <h3 class="box-item_title">d</h3>
-                        <span class="box-item_dueDate">d</span>
+                    <h5 class="task-box-title" id="box-title-upcoming">You have done all <br>upcoming tasks</h5>
+                    <div class="box-item-wrapper hidden" id="box-item-upcoming">
                     </div>
                 </div>
             </div>
@@ -136,18 +90,30 @@
                 </div>
 
                 <div class="task-box">
-                    <div class="box-item">
-                        <h3 class="box-item_title">d</h3>
-                        <span class="box-item_dueDate">d</span>
-                    </div>
+                <h5 class="task-box-title" id="box-title-overdue">You have no <br>overdue tasks</h5>
+                <div class="box-item-wrapper hidden" id="box-item-overdue">
+                </div>
                 </div>
             </div>
         </div>
 
 
+        <div class="add_box" id="add_box">
+            <h1 class="add_box-title">Enter your personal code <br> to join a course</h1>
+            <form id="code-form">
+                <div class="form-group">
+                    <input type="text" id="code" name="code" placeholder=" " oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,4)">
+                    <span>Personal code</span>
+                </div>
 
+                <button class="primary_btn join-btn" id="join-btn" type="submit">Join</button>
+            </form>
+        </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script src="../scripts/learning.js"></script>
 </body>
