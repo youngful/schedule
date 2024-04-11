@@ -11,9 +11,9 @@ async function fetchUserData() {
 
         const userData = await response.json();
 
-        document.getElementById('email').value = userData.email;
-        document.getElementById('phone').value = userData.phone;
-        document.getElementById('date').value = userData.dateOfBirth;
+        document.getElementById('email').value = userData.email || '';
+        document.getElementById('phone').value = userData.phone || '';
+        document.getElementById('date').value = userData.dateOfBirth || '';
         document.getElementById('user_name').value = userData.name + userData.lastName;
 
         var fileInput = document.getElementById('file');

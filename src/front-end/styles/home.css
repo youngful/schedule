@@ -50,7 +50,7 @@ a{
     font-size: 20px;
     border-radius: 10px;
     line-height: 70px;
-    padding: 0 24px;
+    /* padding: 0 24px; */
     text-align: left;
     transition: all 0.5s;
 }
@@ -61,6 +61,7 @@ a{
 
 .sidebar-item.active {
     background-color: #F5F5F5;
+    padding: 0 24px;
 }
 
 .sidebar-item.active a{
@@ -83,4 +84,6 @@ a{
     margin-top: 10px;
     height: fit-content;
 }
+
+
 

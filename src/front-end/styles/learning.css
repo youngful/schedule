@@ -5,6 +5,7 @@
 .container {
     max-width: 1032px;
     padding: 5px;
+    position: relative;
 }
 
 .header {
@@ -129,6 +130,7 @@
 
 
 .slider-block {
+    height: 208px;
     padding: 24px;
     margin: 0 15px;
     background-color: #fff;
@@ -153,12 +155,12 @@
     margin-bottom: 45px;
 }
 
-.progress {
+.progress_placeholder {
     display: inline-block;
     margin-bottom: 8px;
 }
 
-.progress_scale {
+.progress_scale_placeholder {
     width: 312px;
     display: flex;
     justify-content: space-between;
@@ -203,13 +205,15 @@
     display: flex;
     margin-top: 24px;
     gap: 24px;
+    
 }
 
 .learning-box{
     width: 504px;
-    min-height: 350px;
+    height: 410px;
     background-color: #fff;
     border-radius: 30px;
+    overflow-y: scroll;
 }
 
 .box-title_wrapper{
@@ -217,20 +221,98 @@
     align-items: center;
     gap: 24px;
     margin: 32px;
+}
 
+.box-item-wrapper{
+    padding-bottom: 32px;
 }
 
 .box-item{
-    border-top: 1px solid #EEE;
     border-bottom: 1px solid #EEE;
     padding: 4px 32px;
     color: #5D7CFB;
 }
 
+#box-item-overdue .box-item:first-child,
+#box-item-upcoming .box-item:first-child{
+    border-top: 1px solid #EEE;
+}
+
+.task-box-title{
+    text-align: center;
+    margin-top: 100px;
+    color: #4E4E4E;
+    font-size: 16px;
+}
+
 .box-item_title{
     font-size: 20px;
+    line-height: 30px;
 }
 
 .box-item_dueDate{
     font-size: 14px;
+    line-height: 21px;
+}
+
+#add_box{
+    position: absolute;
+    display: none;
+    max-width: 456px;
+    width: 100%;
+    text-align: center;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 64px 48px;
+    box-shadow: 0px 4px 30px 0px #00000033;
+    border-radius: 30px;
+    font-size: 12px;
+}
+
+.add_box-title{
+    margin: 0 auto;
+    max-width: fit-content;
+}
+
+.form-group{
+    margin: 65px 0 48px;
+}
+
+input[type="text"] {
+    width: calc(100% - 5px);
+    height: 43px;
+    padding: 10px;
+    border: 0.5px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+}
+
+input[type="text"] {
+    border-radius: 10px;
+}
+
+input[type="text"]:focus {
+    border: 1px solid #5D7CFB; 
+}
+
+.form-group span {
+    position: absolute;
+    top: -25%;
+    left: 10px;
+    color: #999;
+    background-color: #fff;
+    padding: 0 24px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+input:focus + span,
+input:not(:placeholder-shown) + span {
+    color: #333;
+}
+
+.join-btn{
+    width: 100%;
 }
