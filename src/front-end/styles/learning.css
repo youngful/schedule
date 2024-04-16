@@ -213,7 +213,11 @@
     height: 410px;
     background-color: #fff;
     border-radius: 30px;
+}
+
+.task-box-wrapper{
     overflow-y: scroll;
+    max-height: 280px;
 }
 
 .box-title_wrapper{
@@ -248,6 +252,7 @@
 .box-item_title{
     font-size: 20px;
     line-height: 30px;
+    color: #4E4E4E;
 }
 
 .box-item_dueDate{

@@ -5,7 +5,7 @@ body {
 }
 
 h1{
-    font-size: 60px;
+    font-size: 40px;
     margin: 125px 0 65px 0;
 }
 
@@ -20,25 +20,31 @@ h2{
 }
 
 .register-box{
-    max-width: 800px;
-    min-height: 100vh;
+    max-width: 808px;
     background-color: #fff;
-    margin-left: auto;
-    box-shadow: 0px 4px 50px 0px #00000026;
-    display: flex;
-    gap: 100px;
-    flex-direction: column;
-    justify-content: center;
+    margin: 10px auto 0;
+    padding: 64px 100px 48px;
+    border-radius: 30px;
+}
+
+.register-box-student{
+    height: 713px;
+    margin-top: 50px;
 }
 
 .title {
     font-family: "Vindea";
-    font-size: 60px;
+    margin-bottom: 60px;
+    font-size: 40px;
+    line-height: 48px;
     font-weight: 400;
-    justify-content: center;
-    gap: 18px;
-    align-items: center;
-    display: flex;
+    text-align: center;
+}
+
+.sign_title{
+    margin-bottom: 64px;
+    line-height: 64px;
+    font-size: 24px;
 }
 
 .sign_up-form{
@@ -52,8 +58,7 @@ h2{
 .sign_up-box{
     text-align: center;
     background-color: #fff;
-    padding: 90px 72px;
-    box-shadow: 0px 4px 50px 0px #00000026;
+    padding: 84px 72px;
     border-radius: 30px;
 }
 
@@ -76,9 +81,9 @@ input[type="password"]:focus {
 .btn{
     font-size: 30px;
     display: block;
-    margin-bottom: 50px;
+    line-height: 44px;
     background-color: #eee;
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 10px;
     border-radius: 10px;
     border: none;
@@ -93,7 +98,11 @@ input[type="password"]:focus {
 }
 
 .form-group{
-    margin-bottom: 58px;
+    margin-bottom: 52px;
+}
+
+.form-group-student {
+    margin-bottom: 53px;
 }
 
 .form-group span {

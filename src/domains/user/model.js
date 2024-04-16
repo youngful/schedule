@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
+const Task = require("../task/model")
 
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   personalCode: [{ 
     type: Number,
+  }],
+  tasks:[{
+    type: Task.schema
   }],
   folderSRC: String,
   file: String,

@@ -19,7 +19,7 @@ async function fetchUserData() {
         }
 
         addSliderBlocks(window.userData);
-        // console.log(window.userData);
+        console.log(window.userData);
 
         $('.slider').slick('refresh');
 
@@ -50,7 +50,7 @@ function addInfoBoxItems(dataArray) {
 
                 taskCounter++;
 
-                if (daysDifference > 6) {
+                if (daysDifference > 7) {
                     continue;
                 }
 
@@ -218,8 +218,9 @@ document.getElementById('add_course').addEventListener('click', async function (
             alert('User join succesfully!');
 
         } catch (error) {
+            console.log(error);
             console.error('Error join user:', error);
-            alert('Failed to join group. Please try again later.');
+
         }
     })
 
