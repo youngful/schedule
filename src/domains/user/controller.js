@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 const mkdirAsync = promisify(fs.mkdir);
-const multer = require('multer');
+const nodemailer = require("nodemailer");
 
 // handle errors
 const handleErrors = (err) => {
@@ -221,11 +221,18 @@ module.exports.join_group = async (req, res) => {
 
             if (!isUserInGroup && !isCodeAlreadyAssigned) {
                 user.personalCode.push(code);
-                await user.save();
 
-                group.students.push(user._id);
+                group.students.push(user);
                 await group.save();
 
+
+                for (let subj of group.subject) {
+                    for (let task of subj.tasks) {
+                        user.tasks.push(task);
+                    }
+                }
+
+                await user.save();
 
                 return res.status(200).json({ message: "Group added" });
             } else if (isCodeAlreadyAssigned) {
@@ -242,7 +249,7 @@ module.exports.join_group = async (req, res) => {
     }
 };
 
- 
+
 module.exports.get_learnings = async (req, res) => {
     const token = req.cookies.jwt;
 
@@ -289,3 +296,107 @@ module.exports.get_learnings = async (req, res) => {
     }
 };
 
+module.exports.resetPassword_post = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw Error("Invalid email");
+        }
+
+        const resetToken = createResetToken();
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 3600000; // Термін дії токена - 1 година
+        await user.save();
+
+        sendResetPasswordEmail(email, resetToken);
+
+        res.status(200).json({
+            message: "Reset password email sent",
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ error: err.message });
+    }
+};
+
+const sendResetPasswordEmail = (email, token) => {
+    const resetLink = `http://localhost:3001/reset_password-confirm/${token}`;
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.GMAIL_ADDRESS,
+            pass: process.env.GMAIL_PASSWORD,
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.GMAIL_ADDRESS,
+        to: email,
+        subject: "Reset Password",
+        html: `
+      <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
+    <h2 style="color: #212121;">Welcome to Study Space!</h2>
+    <p style="color: #616161; font-size: 16px;">We received a request to reset your password. To proceed, please click the link below:</p>
+    
+    <a href="${resetLink}" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #5D7CFB; color: #fff; text-decoration: none; border-radius: 5px; font-size: 16px;">Change Password</a>
+    
+    <p style="color: #616161; font-size: 16px; margin-top: 15px;">If the button above does not work, you can also copy and paste the following link into your browser:</p>
+    
+    <p style="color: #5D7CFB; font-size: 16px;">${resetLink}</p>
+    
+    <p style="color: #616161; font-size: 16px; margin-top: 15px;">Thank you for choosing our platform. We look forward to having you as part of our community!</p>
+    
+    <p style="color: #757575; font-size: 14px;">Best regards,<br/>Study Space Team</p>
+    </div>
+
+    `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log("Reset Password Email sent: " + info.response);
+        }
+      });
+}
+
+module.exports.recoverPassword_reset = async (req, res) => {
+    const token = req.params.token;
+    const { newPassword, confirmPassword } = req.body;
+  
+    try {
+      const user = await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() },
+      });
+  
+      if (!user) {
+        return res
+          .status(404)
+          .json({ message: "Invalid or expired reset token" });
+      }
+  
+      if (newPassword === confirmPassword) {
+        user.password = newPassword;
+        user.lastPasswordChange = Date.now();
+        user.resetPasswordToken = undefined;
+        await user.save();
+        // res.redirect("/log_in");
+        res.status(200).json({ message: "password reseted" });
+      } else {
+        throw Error("incorrect password");
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+
+  const createResetToken = () => {
+    return jwt.sign({}, secret, { expiresIn: "1h" });
+  };

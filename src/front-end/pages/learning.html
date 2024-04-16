@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
     <link rel="stylesheet" href="../styles/home.css">
     <link rel="stylesheet" href="../styles/learning.css">
     <title>Schedule</title>
@@ -42,9 +44,13 @@
                 </a>
                 <a href="/active" class="panel_btn">
                     <div class="panel_content">
-                        <svg class="panel_img" width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M58 29C58 45.0163 45.0163 58 29 58C12.9837 58 0 45.0163 0 29C0 12.9837 12.9837 0 29 0C45.0163 0 58 12.9837 58 29Z" fill="#5D7CFB" />
-                            <path d="M29 10.5V29L17 41" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        <svg class="panel_img" width="58" height="58" viewBox="0 0 58 58" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M58 29C58 45.0163 45.0163 58 29 58C12.9837 58 0 45.0163 0 29C0 12.9837 12.9837 0 29 0C45.0163 0 58 12.9837 58 29Z"
+                                fill="#5D7CFB" />
+                            <path d="M29 10.5V29L17 41" stroke="white" stroke-width="4" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
 
                         <span>Active<br><span class="counter" id="active_counter">0</span></span>
@@ -57,7 +63,7 @@
 
         <div class="slider-wrapper hidden">
             <div class="slider" id="slider">
-                
+
             </div>
             <div class="pagination-wrapper">
                 <span class="page-numbers prev-page">01</span>
@@ -76,9 +82,11 @@
                     <h3 class="learning-box_title">Upcoming Tasks</h3>
                 </div>
 
-                <div class="task-box">
-                    <h5 class="task-box-title" id="box-title-upcoming">You have done all <br>upcoming tasks</h5>
-                    <div class="box-item-wrapper hidden" id="box-item-upcoming">
+                <div class="task-box-wrapper">
+                    <div class="task-box">
+                        <h5 class="task-box-title" id="box-title-upcoming">You have done all <br>upcoming tasks</h5>
+                        <div class="box-item-wrapper hidden" id="box-item-upcoming">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,10 +97,12 @@
                     <h3 class="learning-box_title">Overdue Tasks</h3>
                 </div>
 
-                <div class="task-box">
-                <h5 class="task-box-title" id="box-title-overdue">You have no <br>overdue tasks</h5>
-                <div class="box-item-wrapper hidden" id="box-item-overdue">
-                </div>
+                <div class="task-box-wrapper">
+                    <div class="task-box">
+                        <h5 class="task-box-title" id="box-title-overdue">You have no <br>overdue tasks</h5>
+                        <div class="box-item-wrapper hidden" id="box-item-overdue">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,7 +112,8 @@
             <h1 class="add_box-title">Enter your personal code <br> to join a course</h1>
             <form id="code-form">
                 <div class="form-group">
-                    <input type="text" id="code" name="code" placeholder=" " oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,4)">
+                    <input type="text" id="code" name="code" placeholder=" "
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,4)">
                     <span>Personal code</span>
                 </div>
 

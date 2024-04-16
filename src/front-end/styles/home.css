@@ -11,8 +11,8 @@ a{
 }
 
 .logo{
-    top: 32px;
-    left: 32px;
+    top: 40px;
+    left: 24px;
 }
 
 .wrapper{
@@ -31,7 +31,7 @@ a{
 .sidebar-list{
     padding: 24px;
     list-style-type: none;
-    margin-top: 104px;
+    margin-top: 128px;
     width: 232px;
     display: flex;
     flex-direction: column;
@@ -48,30 +48,29 @@ a{
     gap: 24px;
     align-items: center;
     font-size: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     line-height: 70px;
-    /* padding: 0 24px; */
     text-align: left;
     transition: all 0.5s;
 }
 
 .log_out-btn{
-    margin-top: 230px;
+    margin-top: 206px;
 }
 
 .sidebar-item.active {
-    background-color: #F5F5F5;
+    background-color: #5D7CFB;
     padding: 0 24px;
 }
 
 .sidebar-item.active a{
-    color: #5D7CFB;
+    color: #fff;
 }
 
 .active-icon svg,
 .active-icon path, 
 .active-icon circle{
-    fill: #5D7CFB;
+    fill: #fff;
 }
 
 .content{

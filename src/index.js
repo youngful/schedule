@@ -23,6 +23,10 @@ server.get('/reset_password', function(req, res) {
   res.sendFile(pages + "/reset_password.html");
 });
 
+server.get('/reset_password-confirm/:token', function(req, res) {
+  res.sendFile(pages + "/reset_password-confirm.html");
+});
+
 server.get('/', function(req, res) {
   res.sendFile(pages + "/home.html");
 });
