@@ -1,4 +1,4 @@
-window.userData = null; // Оголошення глобальної змінної userData
+window.userData = null;
 
 async function fetchUserData() {
     try {
@@ -41,10 +41,10 @@ function addInfoBoxItems(dataArray) {
     for (const group of dataArray) {
         for (const subject of group.subjects) {
             for (const task of subject.tasks) {
-                
+
                 const currentDate = new Date();
-                const dueDate = new Date(task.date); 
-                
+                const dueDate = new Date(task.date);
+
                 const timeDifference = dueDate.getTime() - currentDate.getTime();
                 const daysDifference = timeDifference / (1000 * 3600 * 24);
 
@@ -77,7 +77,7 @@ function addInfoBoxItems(dataArray) {
 
     task_counter_field.innerHTML = taskCounter
     // console.log(taskCounter);
-    
+
 }
 
 function addSliderBlocks(dataArray) {
@@ -94,49 +94,43 @@ function addSliderBlocks(dataArray) {
             <h3 class="block-title">${group.nameGroup}</h3>
         `;
 
-        block.innerHTML += `<h4 class="block-sub_title">${group.subjects[0].name}</h4>`;
+        if (group.subjects[0]) {
+            
 
-        if (group.subjects[0].tasks.length > 0) {
-            block.innerHTML += `<h5 class="block-end_date">${formatDate(group.subjects[0].tasks[0].date)}</h5>`;
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+                const dayOfMonth = date.getDate();
+                const monthName = date.toLocaleDateString('en-US', { month: 'long' });
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                return `${dayOfWeek}, ${dayOfMonth} ${monthName}, ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+            }
+
+            const currentDate = new Date();
+            const dueDate = new Date(group.dueDate);
+            const isOverdue = currentDate > dueDate;
+
+            if (isOverdue) {
+                const totalTasks = group.subjects.reduce((total, subject) => total + subject.tasks.length, 0);
+                let completedTasks = 0;
+                group.subjects.forEach(subject => {
+                    completedTasks += subject.tasks.filter(task => task.completed).length;
+                });
+                let progress = (completedTasks / totalTasks) * 100;
+
+                progress = 99;
+
+                var filledBalls = Math.ceil(progress / 100 * 6);
+
+                block.innerHTML += `
+                <span class="progress_placeholder">${progress}% passed</span>`;
+            }else{
+                block.innerHTML += `<h4 class="block-sub_title">${formatDate(group.subjects[0].tasks[0].date)}</h4>`;
+            }
         }
 
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
-            const dayOfMonth = date.getDate();
-            const monthName = date.toLocaleDateString('en-US', { month: 'long' });
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-            return `${dayOfWeek}, ${dayOfMonth} ${monthName}, ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
-        }
 
-        const currentDate = new Date();
-        const dueDate = new Date(group.dueDate);
-        const isOverdue = currentDate > dueDate;
-
-        if (isOverdue) {
-            const totalTasks = group.subjects.reduce((total, subject) => total + subject.tasks.length, 0);
-            let completedTasks = 0;
-            group.subjects.forEach(subject => {
-                completedTasks += subject.tasks.filter(task => task.completed).length;
-            });
-            let progress = (completedTasks / totalTasks) * 100;
-
-            progress = 99;
-
-            var filledBalls = Math.ceil(progress / 100 * 6);
-
-            block.innerHTML += `
-            <span class="progress_placeholder">${progress}%passed</span>
-            <div class="progress_scale_placeholder">
-                ${Array(6).fill().map((_, index) => `
-                    <svg class="scale" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="${index < filledBalls ? '#BAC8FF' : '#EEE'}" />
-                    </svg>
-                `).join('')}
-            </div>
-            `;
-        }
 
         slider.appendChild(block);
     }
@@ -228,7 +222,7 @@ document.getElementById('add_course').addEventListener('click', async function (
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-    
+
     const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
     const dayOfMonth = date.getDate();
     const monthName = date.toLocaleDateString('en-US', { month: 'long' });
@@ -237,6 +231,87 @@ function formatDate(dateString) {
     return `${dayOfWeek}, ${dayOfMonth} ${monthName}, ${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 }
 
+let selectedDate = new Date();
+const currentDate = new Date();
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+function generateCalendar(year, month) {
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = '';
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+    let html = '<table>';
+    html += '<tr><th>s</th><th>m</th><th>t</th><th>w</th><th>t</th><th>f</th><th>s</th></tr>';
+
+    let day = 1;
+    for (let i = 0; i < 6; i++) {
+        html += '<tr>';
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDayOfMonth) {
+                html += '<td></td>';
+            } else if (day > daysInMonth) {
+                break;
+            } else {
+                const formattedDay = day.toString().padStart(2, '0');
+                const dateString = `${year}-${month + 1}-${formattedDay}`;
+                const isCurrentDate = year === currentDate.getFullYear() && month === currentDate.getMonth() && day === currentDate.getDate();
+                const isSelectedDate = selectedDate.getFullYear() === year && selectedDate.getMonth() === month && selectedDate.getDate() === day;
+
+                const selectedClass = isSelectedDate ? 'selected' : '';
+
+                html += `<td class="${selectedClass}" data-date="${dateString}">${formattedDay}</td>`;
+                day++;
+            }
+        }
+        html += '</tr>';
+    }
+    html += '</table>';
+
+    calendar.innerHTML = html;
+
+    const days = document.querySelectorAll('#calendar td');
+
+    days.forEach(day => {
+        day.addEventListener('click', () => {
+            days.forEach(d => d.classList.remove('selected'));
+            day.classList.add('selected');
+            selectedDate = new Date(day.dataset.date);
+        });
+    });
+}
+
+function updateCalendar() {
+    const currentYear = selectedDate.getFullYear();
+    const currentMonth = selectedDate.getMonth();
+    generateCalendar(currentYear, currentMonth);
+    updateTodayText();
+}
+
+function updateTodayText() {
+    const currentDayOfWeek = daysOfWeek[currentDate.getDay()];
+    const currentMonth = months[currentDate.getMonth()];
+    const todayText = `Today, ${currentDayOfWeek}, ${currentMonth} ${currentDate.getDate()}`;
+
+    const todayElement = document.getElementById('today');
+    todayElement.textContent = todayText;
+}
+
+document.getElementById('prevMonth').addEventListener('click', () => {
+    selectedDate.setMonth(selectedDate.getMonth() - 1);
+    updateCalendar();
+});
+
+document.getElementById('nextMonth').addEventListener('click', () => {
+    selectedDate.setMonth(selectedDate.getMonth() + 1);
+    updateCalendar();
+});
+
+
+generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+updateTodayText();
 fetchUserData();
 
 

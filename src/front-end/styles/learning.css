@@ -1,9 +1,27 @@
-.hidden{
+table {
+    border-collapse: separate;
+    font-size: 14px;
+}
+
+th {
+    color: #9C9C9C;
+}
+
+th,
+td {
+    width: 24px;
+    height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    padding: 0 4px;
+}
+
+.hidden {
     display: none;
 }
 
 .container {
-    max-width: 1032px;
+    max-width: 1080px;
     padding: 5px;
     position: relative;
 }
@@ -56,14 +74,15 @@
     transition: all 0.5s;
 }
 
-.panel_btn svg{
+.panel_btn svg {
     transition: all 0.5s;
 }
 
-.panel_btn:first-child svg{
+.panel_btn:first-child svg {
     border-radius: 20px;
 }
-.panel_btn:nth-child(2) svg{
+
+.panel_btn:nth-child(2) svg {
     border-radius: 30px;
 }
 
@@ -130,12 +149,15 @@
 
 
 .slider-block {
-    height: 208px;
-    padding: 24px;
-    margin: 0 15px;
+    height: 136px;
+    padding: 32px;
+    width: 532px;
+    margin-right: 16px;
     background-color: #fff;
     border-radius: 30px;
 }
+
+
 
 .block-title {
     font-size: 24px;
@@ -177,14 +199,14 @@
     background-color: #b4b2b2;
 }
 
-.pagination-wrapper{
+.pagination-wrapper {
     position: relative;
     width: 116px;
     margin: 0 auto;
 
 }
 
-.page-numbers{
+.page-numbers {
     font-size: 16px;
     color: #D5D5D5;
     position: absolute;
@@ -193,74 +215,61 @@
     transform: translateX(-50%);
 }
 
-.next-page{
+.next-page {
     left: calc(50% + 70px);
 }
 
-.prev-page{
+.prev-page {
     left: calc(50% - 70px);
 }
 
-.learning-info{
+.learning-info {
     display: flex;
     margin-top: 24px;
     gap: 24px;
-    
 }
 
-.learning-box{
-    width: 504px;
-    height: 410px;
-    background-color: #fff;
-    border-radius: 30px;
-}
-
-.task-box-wrapper{
-    overflow-y: scroll;
-    max-height: 280px;
-}
-
-.box-title_wrapper{
+.box-title_wrapper {
     display: flex;
     align-items: center;
     gap: 24px;
     margin: 32px;
 }
 
-.box-item-wrapper{
+.box-item-wrapper {
     padding-bottom: 32px;
 }
 
-.box-item{
+.box-item {
     border-bottom: 1px solid #EEE;
     padding: 4px 32px;
     color: #5D7CFB;
 }
 
 #box-item-overdue .box-item:first-child,
-#box-item-upcoming .box-item:first-child{
+#box-item-upcoming .box-item:first-child {
     border-top: 1px solid #EEE;
 }
 
-.task-box-title{
+.task-box-title {
     text-align: center;
-    margin-top: 100px;
     color: #4E4E4E;
     font-size: 16px;
 }
 
-.box-item_title{
+.box-item_title {
     font-size: 20px;
     line-height: 30px;
     color: #4E4E4E;
 }
 
-.box-item_dueDate{
+.box-item_dueDate {
+    color: #FF5756;
     font-size: 14px;
     line-height: 21px;
 }
 
-#add_box{
+#add_box {
     position: absolute;
     display: none;
     max-width: 456px;
@@ -276,12 +285,12 @@
     font-size: 12px;
 }
 
-.add_box-title{
+.add_box-title {
     margin: 0 auto;
     max-width: fit-content;
 }
 
-.form-group{
+.form-group {
     margin: 65px 0 48px;
 }
 
@@ -299,7 +308,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-    border: 1px solid #5D7CFB; 
+    border: 1px solid #5D7CFB;
 }
 
 .form-group span {
@@ -313,11 +322,73 @@ input[type="text"]:focus {
     pointer-events: none;
 }
 
-input:focus + span,
-input:not(:placeholder-shown) + span {
+input:focus+span,
+input:not(:placeholder-shown)+span {
     color: #333;
 }
 
-.join-btn{
+.join-btn {
     width: 100%;
+}
+
+.grid-box {
+    display: grid;
+    grid-template-columns: 1.22fr 1.22fr 1fr;
+    grid-template-rows: 1.67fr 1fr;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+}
+
+.calendar {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.overdue {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.meeting {
+    grid-area: 2 / 1 / 3 / 3;
+}
+
+.upcoming {
+    grid-area: 1 / 3 / 3 / 4;
+}
+
+#today {
+    text-align: left;
+    padding: 0 4px;
+}
+
+.calendar-wrapper {
+    background-color: #fff;
+    padding: 24px 28px 28px;
+    max-width: 376px;
+    border-radius: 30px;
+    text-align: center;
+    position: relative;
+
+}
+
+.month-navigation{
+    position: absolute;
+    display: flex;
+    gap: 16px;
+    right: 32px;
+    top: 24px;
+}
+
+.month-navigation button{
+    border: none;
+    background-color: transparent;
+}
+
+#calendar td.selected {
+    background-color: #5D7CFB;
+}
+
+.overdue,
+.upcoming{
+    background-color: #fff;
+    border-radius: 30px;
 }
