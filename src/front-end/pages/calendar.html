@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Calendar</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            color: #9C9C9C;
+        }
+
+        th,
+        td {
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            border-radius: 50%;
+        }
+
+        .month-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .month-navigation button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #5D7CFB;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Calendar</h2>
+    
+    <div id="calendar"></div>
+
+    <script>
+        let selectedDate = new Date();
+        const currentDate = new Date();
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        function generateCalendar(year, month) {
+            const calendar = document.getElementById('calendar');
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+            let html = '<table>';
+            html += '<tr><th>s</th><th>m</th><th>t</th><th>w</th><th>t</th><th>f</th><th>s</th></tr>';
+
+            let day = 1;
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDayOfMonth) {
+                        html += '<td></td>';
+                    } else if (day > daysInMonth) {
+                        break;
+                    } else {
+                        const formattedDay = day.toString().padStart(2, '0');
+                        const dateString = `${year}-${month + 1}-${formattedDay}`;
+                        const isCurrentDate = year === currentDate.getFullYear() && month === currentDate.getMonth() && day === currentDate.getDate();
+                        const isSelectedDate = selectedDate.getFullYear() === year && selectedDate.getMonth() === month && selectedDate.getDate() === day;
+
+                        const selectedClass = isSelectedDate ? 'selected' : '';
+
+                        html += `<td class="${selectedClass}" data-date="${dateString}">${formattedDay}</td>`;
+                        day++;
+                    }
+                }
+                html += '</tr>';
+            }
+            html += '</table>';
+
+            calendar.innerHTML = html;
+
+            const days = document.querySelectorAll('#calendar td');
+
+            days.forEach(day => {
+                day.addEventListener('click', () => {
+                    days.forEach(d => d.classList.remove('selected'));
+                    day.classList.add('selected');
+                    selectedDate = new Date(day.dataset.date);
+                });
+            });
+        }
+
+        function updateCalendar() {
+            const currentYear = selectedDate.getFullYear();
+            const currentMonth = selectedDate.getMonth();
+            generateCalendar(currentYear, currentMonth);
+            updateTodayText();
+        }
+
+        function updateTodayText() {
+            const currentDayOfWeek = daysOfWeek[selectedDate.getDay()];
+            const todayText = `Today, ${currentDayOfWeek}`;
+            const todayElement = document.getElementById('today');
+            todayElement.textContent = todayText;
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            selectedDate.setMonth(selectedDate.getMonth() - 1);
+            updateCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            selectedDate.setMonth(selectedDate.getMonth() + 1);
+            updateCalendar();
+        });
+
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        updateTodayText();
+    </script>
+
+</body>
+
+</html>

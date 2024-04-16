@@ -61,22 +61,51 @@
 
         </div>
 
-        <div class="slider-wrapper hidden">
-            <div class="slider" id="slider">
-
-            </div>
-            <div class="pagination-wrapper">
-                <span class="page-numbers prev-page">01</span>
-                <div class="slider-pagination">
-                    <div class="slider-pagination-line"></div>
+        <div class="grid-box">
+            <div class="calendar-wrapper">
+                <h3 id="today"></h3>
+                <div class="month-navigation">
+                    <button id="prevMonth"><img src="../images/icons/calendar-left-arrow.svg" alt=""></button>
+                    <button id="nextMonth"><img src="../images/icons/calendar-right-arrow.svg" alt=""></button>
                 </div>
-                <span class="page-numbers next-page"></span>
+                <div class="calendar" id="calendar">
+
+                </div>
             </div>
-        </div>
+            <div class="overdue">
+                <div class="box-title_wrapper">
+                    <img src="../images/icons/clock2.svg" alt="" style="width: 58px;">
+                    <h3 class="learning-box_title">Overdue Tasks</h3>
+                </div>
 
-
-        <div class="learning-info">
-            <div class="learning-box upcoming">
+                <div class="task-box-wrapper">
+                    <div class="task-box">
+                        <h5 class="task-box-title" id="box-title-overdue">You have no <br>overdue tasks</h5>
+                        <div class="box-item-wrapper hidden" id="box-item-overdue">
+                        </div>
+                    </div>
+                </div>     
+            </div>
+            <div class="meeting">
+                <div class="day-meeting-wrapper">
+                    <div class="meeting-wrapper">
+                        <h3 id="today_date"></h3>
+                        <div class="meeting-wrapper-item">
+                            <p id="lesson_time"></p>
+                            <p id="lesson_subject"></p>
+                        </div>
+                        <div class="meeting-wrapper-item">
+                            <p id="lesson_time"></p>
+                            <p id="lesson_subject"></p>
+                        </div>
+                        <div class="meeting-wrapper-item">
+                            <p id="lesson_time"></p>
+                            <p id="lesson_subject"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="upcoming">
                 <div class="box-title_wrapper">
                     <img src="../images/icons/tasks2.svg" alt="" style="width: 58px;">
                     <h3 class="learning-box_title">Upcoming Tasks</h3>
@@ -90,20 +119,18 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="learning-box overdue">
-                <div class="box-title_wrapper">
-                    <img src="../images/icons/clock2.svg" alt="" style="width: 58px;">
-                    <h3 class="learning-box_title">Overdue Tasks</h3>
-                </div>
+        <div class="slider-wrapper hidden">
+            <div class="slider" id="slider">
 
-                <div class="task-box-wrapper">
-                    <div class="task-box">
-                        <h5 class="task-box-title" id="box-title-overdue">You have no <br>overdue tasks</h5>
-                        <div class="box-item-wrapper hidden" id="box-item-overdue">
-                        </div>
-                    </div>
+            </div>
+            <div class="pagination-wrapper">
+                <span class="page-numbers prev-page">01</span>
+                <div class="slider-pagination">
+                    <div class="slider-pagination-line"></div>
                 </div>
+                <span class="page-numbers next-page"></span>
             </div>
         </div>
 

@@ -6,12 +6,10 @@
 }
 
 .container{
-    max-width: 904px;
-    width: 100%;
+    width: 904px; 
     padding: 64px;
     background-color: #fff;
     border-radius: 30px;
-    background-color: #fff;
 }
 
 .profile_box {

@@ -11,6 +11,11 @@ server.get('/sign_up', function(req, res) {
   res.sendFile(pages + "/sign_up.html");
 });
 
+server.get('/calendar', function(req, res) {
+  res.sendFile(pages + "/calendar.html");
+});
+
+
 server.get('/sign_up/teacher', function(req, res) {
   res.sendFile(pages + "/sign_up-teacher.html");
 });
