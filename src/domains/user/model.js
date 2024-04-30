@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 const Task = require("../task/model")
+const Meeting = require("../meeting/model")
 
 const userSchema = new mongoose.Schema({
   firstName: String,
@@ -11,6 +12,9 @@ const userSchema = new mongoose.Schema({
   }],
   tasks:[{
     type: Task.schema
+  }],
+  meetings:[{
+    type: Meeting.schema
   }],
   folderSRC: String,
   file: String,

@@ -1,5 +1,29 @@
 window.userData = null;
 
+async function userInfo() {
+    try {
+
+        const response = await fetch('http://localhost:3001/user/get_info', {
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch user data.');
+        }
+
+        const userData = await response.json();
+
+        const userType = document.getElementById("user_type");
+        const userName = document.getElementById("user_name");
+
+        userType.textContent = userData.type; 
+        userName.textContent = `${userData.name} ${userData.lastName}`; 
+
+    } catch (error) {
+        console.error('Error fetching user info:', error);
+    }
+}
+
 async function fetchUserData() {
     try {
         const response = await fetch('http://localhost:3001/user/get_learnings', {
@@ -18,8 +42,12 @@ async function fetchUserData() {
             return null;
         }
 
-        addSliderBlocks(window.userData);
         console.log(window.userData);
+
+        userInfo()
+        addSliderBlocks(window.userData);
+        addMeetingsToSchedule(window.userData);
+
 
         $('.slider').slick('refresh');
 
@@ -36,48 +64,164 @@ function addInfoBoxItems(dataArray) {
     const upcoming_title = document.getElementById('box-title-upcoming');
     const overdue_title = document.getElementById('box-title-overdue');
     const task_counter_field = document.getElementById('task_counter');
+
     let taskCounter = 0;
+    const overdueTasks = [];
+    const upcomingTasks = [];
 
     for (const group of dataArray) {
-        for (const subject of group.subjects) {
-            for (const task of subject.tasks) {
+        for (let task of group.tasks) {
+            const currentDate = new Date();
+            const dueDate = new Date(task.date);
+            const timeDifference = dueDate.getTime() - currentDate.getTime();
+            const daysDifference = timeDifference / (1000 * 3600 * 24);
+            taskCounter++;
 
-                const currentDate = new Date();
-                const dueDate = new Date(task.date);
+            const block = document.createElement('div');
+            block.classList.add('box-item');
+            block.innerHTML = `
+                <h3 class="box-item_title">${task.name}</h3>
+                <span class="box-item_dueDate">${formatDate(task.date)}</span>
+            `;
 
-                const timeDifference = dueDate.getTime() - currentDate.getTime();
-                const daysDifference = timeDifference / (1000 * 3600 * 24);
-
-                taskCounter++;
-
-                if (daysDifference > 7) {
-                    continue;
-                }
-
-                const block = document.createElement('div');
-                block.classList.add('box-item');
-                block.innerHTML = `
-                    <h3 class="box-item_title">${task.taskName}</h3>
-                    <span class="box-item_dueDate">${formatDate(task.date)}</span>
-                `;
-
-                const isOverdue = currentDate > dueDate;
-                if (isOverdue) {
-                    overdue.classList.remove("hidden");
-                    overdue_title.classList.add("hidden");
-                    overdue.appendChild(block);
-                } else {
-                    upcoming.classList.remove("hidden");
-                    upcoming_title.classList.add("hidden");
-                    upcoming.appendChild(block);
-                }
+            const isOverdue = currentDate > dueDate;
+            if (isOverdue) {
+                overdueTasks.push(block);
+            } else {
+                upcomingTasks.push(block);
             }
         }
     }
 
-    task_counter_field.innerHTML = taskCounter
-    // console.log(taskCounter);
+    overdueTasks.forEach(task => overdue.appendChild(task));
+    upcomingTasks.forEach(task => upcoming.appendChild(task));
 
+    if (overdueTasks.length > 0) {
+        overdue.classList.remove("hidden");
+        overdue_title.classList.add("hidden");
+    }
+
+    if (upcomingTasks.length > 0) {
+        upcoming.classList.remove("hidden");
+        upcoming_title.classList.add("hidden");
+    }
+
+    task_counter_field.innerHTML = taskCounter;
+}
+
+function addMeetingsToSchedule(dataArray) {
+    const meeting_field = document.getElementById('meeting_counter');
+    // Зберігаємо всі зустрічі з усіх груп у один масив
+    const allMeetings = [];
+    for (const group of dataArray) {
+        for (const meeting of group.meetings) {
+            meeting.groupName = group.nameGroup; 
+            allMeetings.push(meeting);
+        }
+    }
+
+    meeting_field.textContent = allMeetings.length;
+    console.log(allMeetings);
+    
+    // Сортуємо зустрічі по даті в зростаючому порядку
+    allMeetings.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+
+        const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+        const dayOfMonth = date.getDate();
+        const monthName = date.toLocaleDateString('en-US', { month: 'long' });
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        return `${monthName} ${dayOfMonth}`;
+    }
+
+    // Отримуємо сьогоднішню, завтрашню та післязавтрашню обгортки зустрічей
+    const today = document.getElementById('today-meeting-wrapper');
+    const todayHeader = document.getElementById("meeting_date-today");
+    const tomorrow = document.getElementById('tomorrow-meeting-wrapper');
+    const tomorrowHeader = document.getElementById("meeting_date-tomorrow");
+    const dayAfterTomorrow = document.getElementById('day-after-tomorrow-meeting-wrapper');
+    const afterTomorrowHeader = document.getElementById("meeting_date-after-tomorrow");
+
+    // Отримуємо поточну дату
+    const currentDate = new Date();
+
+    const tomorrowDate = new Date(currentDate);
+    tomorrowDate.setDate(currentDate.getDate() + 1);
+
+    const afterTomorrowDate = new Date(currentDate);
+    afterTomorrowDate.setDate(currentDate.getDate() + 2);
+
+    const tomorrowDay = tomorrowDate.toLocaleDateString('en-US', { weekday: 'long' });
+    const afterTomorrowDay = afterTomorrowDate.toLocaleDateString('en-US', { weekday: 'long' });
+
+    todayHeader.textContent = `${formatDate(currentDate)}, Today`;
+    tomorrowHeader.textContent = `${formatDate(tomorrowDate)}, Tomorrow`;
+    afterTomorrowHeader.textContent = `${formatDate(afterTomorrowDate)}, ${afterTomorrowDay}`;
+
+    for (const meeting of allMeetings) {
+        const meetingDate = new Date(meeting.date);
+        const daysDifference = Math.floor((meetingDate - currentDate) / (1000 * 3600 * 24));
+
+        const meetingItem = document.createElement('div');
+        meetingItem.classList.add('meeting-wrapper-item');
+
+        const timeWrapper = document.createElement('div');
+        timeWrapper.classList.add('lesson_time-wrapper');
+        const lessonTime = document.createElement('p');
+        lessonTime.classList.add('lesson_time');
+        lessonTime.textContent = `${meetingDate.getHours()}:${meetingDate.getMinutes() < 10 ? '0' + meetingDate.getMinutes() : meetingDate.getMinutes()}`;
+        
+        const lessonDuration = document.createElement('p');
+        lessonDuration.classList.add('duration');
+        lessonDuration.textContent = "30min";
+
+        timeWrapper.appendChild(lessonTime);
+        timeWrapper.appendChild(lessonDuration);
+        meetingItem.appendChild(timeWrapper);
+
+        const subjectWrapper = document.createElement('div');
+        subjectWrapper.classList.add('lesson_subject-wrapper');
+        const subjectName = document.createElement('p');
+        subjectName.classList.add('subject');
+        subjectName.textContent = `${meeting.name}`;
+        const groupName = document.createElement('p');
+        groupName.classList.add('group');
+        groupName.textContent = `${meeting.groupName}`;
+        subjectWrapper.appendChild(subjectName);
+        subjectWrapper.appendChild(groupName);
+        meetingItem.appendChild(subjectWrapper);
+
+        // Виводимо зустріч у відповідну обгортку в залежності від дати
+        if (daysDifference < 0) {
+            today.appendChild(meetingItem);
+        } else if (daysDifference === 0) {
+            tomorrow.appendChild(meetingItem);
+        } else if (daysDifference === 1) {
+            dayAfterTomorrow.appendChild(meetingItem);
+        }
+    }
+
+    if (today.childElementCount === 1 || today.childElementCount === 0) {
+        const pTag = document.createElement('p');
+        pTag.textContent = 'No meetings';
+        today.appendChild(pTag);
+    }
+
+    if (tomorrow.childElementCount === 1 || tomorrow.childElementCount === 0) {
+        const pTag = document.createElement('p');
+        pTag.textContent = 'No meetings';
+        tomorrow.appendChild(pTag);
+    }
+
+    if (dayAfterTomorrow.childElementCount === 1 || dayAfterTomorrow.childElementCount === 0) {
+        const pTag = document.createElement('p');
+        pTag.textContent = 'No meetings';
+        dayAfterTomorrow.appendChild(pTag);
+    }
 }
 
 function addSliderBlocks(dataArray) {
@@ -94,9 +238,7 @@ function addSliderBlocks(dataArray) {
             <h3 class="block-title">${group.nameGroup}</h3>
         `;
 
-        if (group.subjects[0]) {
-            
-
+        if (group.tasks[0]) {
             function formatDate(dateString) {
                 const date = new Date(dateString);
                 const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
@@ -112,25 +254,30 @@ function addSliderBlocks(dataArray) {
             const isOverdue = currentDate > dueDate;
 
             if (isOverdue) {
-                const totalTasks = group.subjects.reduce((total, subject) => total + subject.tasks.length, 0);
+                const totalTasks = group.tasks.length;
                 let completedTasks = 0;
-                group.subjects.forEach(subject => {
-                    completedTasks += subject.tasks.filter(task => task.completed).length;
+
+                group.tasks.forEach(task => {
+                    completedTasks += group.tasks.filter(task => task.grade !== undefined).length;
                 });
+
+                console.log(completedTasks);
+
                 let progress = (completedTasks / totalTasks) * 100;
 
-                progress = 99;
-
-                var filledBalls = Math.ceil(progress / 100 * 6);
+                // progress = 99;
 
                 block.innerHTML += `
-                <span class="progress_placeholder">${progress}% passed</span>`;
-            }else{
-                block.innerHTML += `<h4 class="block-sub_title">${formatDate(group.subjects[0].tasks[0].date)}</h4>`;
+                <span class="progress_placeholder">${progress}% passed</span><br>
+                <a class = "btn-link" href="#">Course details <img src="../images/icons/button-arrow-right.svg" alt="" style="width: 32px;"></a>`;
+            } else {
+                block.innerHTML += `<h4 class="block-sub_title">${formatDate(group.dueDate)}</h4>`;
+                block.innerHTML += `<a class = "btn-link" href="#">Supplement <img src="../images/icons/button-arrow-right.svg" alt="" style="width: 32px;"></a>`;
             }
+        } else {
+            block.innerHTML += `<h4 class="block-sub_title">${formatDate(group.dueDate)}</h4>`;
+            block.innerHTML += `<a class = "btn-link" href="#">Supplement <img src="../images/icons/button-arrow-right.svg" alt="" style="width: 32px;"></a>`;
         }
-
-
 
         slider.appendChild(block);
     }
@@ -308,6 +455,20 @@ document.getElementById('nextMonth').addEventListener('click', () => {
     selectedDate.setMonth(selectedDate.getMonth() + 1);
     updateCalendar();
 });
+
+function panelController(id){
+    const container = document.getElementById('container');
+    const active = document.getElementById('active-container')
+
+    if(id === 'tasks'){
+        container.style.display = "none";
+    }else if(id === 'active'){
+        container.style.display = "none";
+        active.style.display = "block"
+    }else if(id === 'meetings'){
+        container.style.display = "none";
+    }
+}
 
 
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
