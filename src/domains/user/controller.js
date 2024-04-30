@@ -2,7 +2,6 @@ require("dotenv").config();
 const User = require("./model");
 const jwt = require("jsonwebtoken");
 const Group = require("../group/model")
-const Subject = require("../subject/model")
 const Task = require("../task/model")
 const fs = require('fs');
 const path = require('path');
@@ -66,10 +65,11 @@ module.exports.get_info = async (req, res) => {
 
             const userData = {
                 id: user._id,
+                type: user.type,
                 dateOfBirth: user.dateOfBirth,
                 email: user.email,
                 phone: user.phone,
-                name: user.name,
+                name: user.firstName,
                 lastName: user.lastName,
                 file: user.file
             };
@@ -139,14 +139,14 @@ module.exports.login_get = (req, res) => {
 };
 
 module.exports.signup_post = async (req, res) => {
-    const { personalCode, email, password } = req.body;
+    const { personalCode, email, password, firstName, lastName, phone } = req.body;
 
     try {
         if (personalCode) {
             const group = await Group.findOne({ code: personalCode });
 
             if (group) {
-                const user = await User.create({ personalCode, email, password });
+                const user = await User.create({ personalCode, email, password, firstName, lastName });
                 group.students.push(user);
                 await group.save();
                 return res.status(200).json({ message: "signed up" });
@@ -154,7 +154,7 @@ module.exports.signup_post = async (req, res) => {
                 return res.status(400).json({ message: "Group not found for the provided personal code" });
             }
         } else {
-            const user = await User.create({ email, password });
+            const user = await User.create({ email, password, firstName, lastName, phone });
 
             const userId = user._id.toString();
             const userFolderPath = path.join(__dirname, '..', 'uploads', userId);
@@ -225,11 +225,9 @@ module.exports.join_group = async (req, res) => {
                 group.students.push(user);
                 await group.save();
 
-
-                for (let subj of group.subject) {
-                    for (let task of subj.tasks) {
-                        user.tasks.push(task);
-                    }
+                for (let task of group.tasks) {
+                    let newTask = await Task.create({ name: task.name });
+                    user.tasks.push(newTask);
                 }
 
                 await user.save();
@@ -276,13 +274,19 @@ module.exports.get_learnings = async (req, res) => {
                     _id: group._id,
                     nameGroup: group.name,
                     dueDate: group.dueDate,
-                    subjects: []
+                    tasks: [],
+                    meetings: []
                 };
-                for (let subjectId of group.subject) {
-                    const subject = await Subject.findById(subjectId);
-                    const tasks = await Task.find({ _id: { $in: subject.tasks } }, 'name date'); // Включаємо поле з датою
-                    const tasksInfo = tasks.map(task => ({ taskName: task.name, date: task.date }));
-                    groupData.subjects.push({ name: subject.name, tasks: tasksInfo });
+
+                for (let task of group.tasks) {
+                    const tasks = await Task.find({ _id: { $in: group.tasks } }, 'name date');
+                    const tasksInfo = tasks.map(task => ({ name: task.name, date: task.date }));
+                    groupData.tasks.push({ name: task.name, date: task.date });
+                }
+                for (let meeting of group.meetings) {
+                    const meets = await Task.find({ _id: { $in: group.meetings } }, 'name date');
+                    const meetingsInfo = meets.map(meeting => ({ name: meeting.name, date: meeting.date }));
+                    groupData.meetings.push({ name: meeting.name, date: meeting.date });
                 }
                 formattedData.push(groupData);
             }
@@ -358,45 +362,45 @@ const sendResetPasswordEmail = (email, token) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.error(error);
+            console.error(error);
         } else {
-          console.log("Reset Password Email sent: " + info.response);
+            console.log("Reset Password Email sent: " + info.response);
         }
-      });
+    });
 }
 
 module.exports.recoverPassword_reset = async (req, res) => {
     const token = req.params.token;
     const { newPassword, confirmPassword } = req.body;
-  
-    try {
-      const user = await User.findOne({
-        resetPasswordToken: token,
-        resetPasswordExpires: { $gt: Date.now() },
-      });
-  
-      if (!user) {
-        return res
-          .status(404)
-          .json({ message: "Invalid or expired reset token" });
-      }
-  
-      if (newPassword === confirmPassword) {
-        user.password = newPassword;
-        user.lastPasswordChange = Date.now();
-        user.resetPasswordToken = undefined;
-        await user.save();
-        // res.redirect("/log_in");
-        res.status(200).json({ message: "password reseted" });
-      } else {
-        throw Error("incorrect password");
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Internal server error" });
-    }
-  };
 
-  const createResetToken = () => {
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ message: "Invalid or expired reset token" });
+        }
+
+        if (newPassword === confirmPassword) {
+            user.password = newPassword;
+            user.lastPasswordChange = Date.now();
+            user.resetPasswordToken = undefined;
+            await user.save();
+            // res.redirect("/log_in");
+            res.status(200).json({ message: "password reseted" });
+        } else {
+            throw Error("incorrect password");
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+const createResetToken = () => {
     return jwt.sign({}, secret, { expiresIn: "1h" });
-  };
+};

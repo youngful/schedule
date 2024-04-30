@@ -9,53 +9,61 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
     <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="../styles/learning-active.css">
     <link rel="stylesheet" href="../styles/learning.css">
     <title>Schedule</title>
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container hidden" id="container">
         <div class="header">
             <div class="profile">
                 <img src="../images/icons/profile-icon.svg" alt="" style="width: 96px;">
-                <h2 class="user_name" id="user_name">Some User</h2>
+                <div class="user_wrapper">
+                    <p id="user_type"></p>
+                    <h2 class="user_name" id="user_name"></h2>
+                </div>
+
             </div>
 
             <div class="panel">
-                <a href="/tasks" class="panel_btn">
+                <button class="panel_btn" onclick="panelController('meetings')">
                     <div class="panel_content">
-                        <svg class="panel_img" width="59" height="59" viewBox="0 0 59 59" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <rect width="58.2583" height="58.2583" rx="20" fill="#5D7CFB" />
-                            <path d="M13.4443 20.4464L15.9651 23.2473L22.4072 16.8053" stroke="white" stroke-width="4"
-                                stroke-linecap="round" />
-                            <path d="M13.4443 38.9323L15.9651 41.7331L22.4072 35.2911" stroke="white" stroke-width="4"
-                                stroke-linecap="round" />
-                            <path d="M35 20L45 20" stroke="white" stroke-width="4" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path d="M35 39L45 39" stroke="white" stroke-width="4" stroke-linecap="round"
-                                stroke-linejoin="round" />
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M13.1732 31.3076H27.7885V30.5923C27.7885 29.3307 27.1097 28.3012 25.752 27.5038C24.3943 26.7064 22.6373 26.3077 20.4809 26.3077C18.3245 26.3077 16.5674 26.7064 15.2098 27.5038C13.8521 28.3012 13.1732 29.3307 13.1732 30.5923V31.3076ZM20.4809 23.6923C21.4527 23.6923 22.2789 23.3519 22.9597 22.6711C23.6404 21.9903 23.9808 21.1641 23.9808 20.1923C23.9808 19.2205 23.6404 18.3942 22.9597 17.7135C22.2789 17.0327 21.4527 16.6923 20.4809 16.6923C19.5091 16.6923 18.6828 17.0327 18.0021 17.7135C17.3213 18.3942 16.9809 19.2205 16.9809 20.1923C16.9809 21.1641 17.3213 21.9903 18.0021 22.6711C18.6828 23.3519 19.5091 23.6923 20.4809 23.6923ZM9.09631 38.9999C8.08604 38.9999 7.23091 38.6499 6.53091 37.9499C5.83094 37.2499 5.48096 36.3948 5.48096 35.3845V12.6154C5.48096 11.6051 5.83094 10.75 6.53091 10.05C7.23091 9.35 8.08604 9 9.09631 9H31.8654C32.8757 9 33.7308 9.35 34.4308 10.05C35.1308 10.75 35.4808 11.6051 35.4808 12.6154V21.7693L42.5192 14.7309V33.2691L35.4808 26.2307V35.3845C35.4808 36.3948 35.1308 37.2499 34.4308 37.9499C33.7308 38.6499 32.8757 38.9999 31.8654 38.9999H9.09631ZM9.09631 36H31.8654C32.0449 36 32.1924 35.9422 32.3078 35.8268C32.4232 35.7115 32.4809 35.564 32.4809 35.3845V12.6154C32.4809 12.4359 32.4232 12.2885 32.3078 12.173C32.1924 12.0576 32.0449 12 31.8654 12H9.09631C8.91681 12 8.76936 12.0576 8.65396 12.173C8.53856 12.2885 8.48086 12.4359 8.48086 12.6154V35.3845C8.48086 35.564 8.53856 35.7115 8.65396 35.8268C8.76936 35.9422 8.91681 36 9.09631 36Z"
+                                fill="#5D7CFB" />
+                        </svg>
+
+                        <span>Meetings<br><span class="counter" id="meeting_counter">0</span></span>
+                    </div>
+                </button>
+
+                <button class="panel_btn" onclick="panelController('tasks')">
+                    <div class="panel_content">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M11.3885 36.9038L5 30.5154L7.08845 28.427L11.3385 32.677L19.8384 24.177L21.9268 26.3154L11.3885 36.9038ZM11.3885 21.6731L5 15.2847L7.08845 13.1963L11.3385 17.4463L19.8384 8.94629L21.9268 11.0847L11.3885 21.6731ZM26.0192 33.1153V30.1154H43.0191V33.1153H26.0192ZM26.0192 17.8846V14.8847H43.0191V17.8846H26.0192Z"
+                                fill="#5D7CFB" />
                         </svg>
 
                         <span>Tasks<br><span class="counter" id="task_counter">0</span></span>
                     </div>
 
-                </a>
-                <a href="/active" class="panel_btn">
+                </button>
+                <button class="panel_btn" onclick="panelController('active')">
                     <div class="panel_content">
-                        <svg class="panel_img" width="58" height="58" viewBox="0 0 58 58" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="M58 29C58 45.0163 45.0163 58 29 58C12.9837 58 0 45.0163 0 29C0 12.9837 12.9837 0 29 0C45.0163 0 58 12.9837 58 29Z"
+                                d="M24 35.4999C27.1944 35.4999 29.9097 34.3819 32.1458 32.1458C34.3819 29.9097 35.4999 27.1944 35.4999 24C35.4999 20.8974 34.439 18.2372 32.3173 16.0192C30.1955 13.8013 27.5897 12.641 24.5 12.5385V24.2007L16.2308 32.4615C17.3205 33.4205 18.5263 34.1666 19.8481 34.6999C21.1699 35.2332 22.5538 35.4999 24 35.4999ZM24.0033 42.9999C21.3754 42.9999 18.9054 42.5012 16.5931 41.5039C14.2808 40.5066 12.2694 39.1531 10.559 37.4434C8.84853 35.7337 7.49442 33.7232 6.49665 31.412C5.49888 29.1007 5 26.6312 5 24.0033C5 21.3754 5.49867 18.9054 6.496 16.5931C7.49333 14.2808 8.84683 12.2694 10.5565 10.559C12.2662 8.84854 14.2767 7.49442 16.588 6.49665C18.8992 5.49889 21.3687 5 23.9966 5C26.6245 5 29.0945 5.49867 31.4068 6.496C33.7191 7.49334 35.7305 8.84683 37.4409 10.5565C39.1514 12.2662 40.5055 14.2767 41.5033 16.588C42.501 18.8992 42.9999 21.3687 42.9999 23.9966C42.9999 26.6245 42.5012 29.0945 41.5039 31.4068C40.5066 33.7191 39.1531 35.7305 37.4434 37.4409C35.7337 39.1514 33.7232 40.5055 31.412 41.5033C29.1007 42.501 26.6312 42.9999 24.0033 42.9999ZM24 40C28.4666 40 32.25 38.45 35.35 35.35C38.45 32.25 40 28.4666 40 24C40 19.5333 38.45 15.75 35.35 12.65C32.25 9.54995 28.4666 7.99995 24 7.99995C19.5333 7.99995 15.75 9.54995 12.65 12.65C9.54995 15.75 7.99995 19.5333 7.99995 24C7.99995 28.4666 9.54995 32.25 12.65 35.35C15.75 38.45 19.5333 40 24 40Z"
                                 fill="#5D7CFB" />
-                            <path d="M29 10.5V29L17 41" stroke="white" stroke-width="4" stroke-linecap="round"
-                                stroke-linejoin="round" />
                         </svg>
+
 
                         <span>Active<br><span class="counter" id="active_counter">0</span></span>
                     </div>
-                </a>
+                </button>
                 <button id="add_course"><img src="../images/icons/add.svg" alt=""></button>
             </div>
 
@@ -74,7 +82,7 @@
             </div>
             <div class="overdue">
                 <div class="box-title_wrapper">
-                    <img src="../images/icons/clock2.svg" alt="" style="width: 58px;">
+                    <img src="../images/icons/clock.svg" alt="" style="width: 32px;">
                     <h3 class="learning-box_title">Overdue Tasks</h3>
                 </div>
 
@@ -84,30 +92,11 @@
                         <div class="box-item-wrapper hidden" id="box-item-overdue">
                         </div>
                     </div>
-                </div>     
-            </div>
-            <div class="meeting">
-                <div class="day-meeting-wrapper">
-                    <div class="meeting-wrapper">
-                        <h3 id="today_date"></h3>
-                        <div class="meeting-wrapper-item">
-                            <p id="lesson_time"></p>
-                            <p id="lesson_subject"></p>
-                        </div>
-                        <div class="meeting-wrapper-item">
-                            <p id="lesson_time"></p>
-                            <p id="lesson_subject"></p>
-                        </div>
-                        <div class="meeting-wrapper-item">
-                            <p id="lesson_time"></p>
-                            <p id="lesson_subject"></p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="upcoming">
                 <div class="box-title_wrapper">
-                    <img src="../images/icons/tasks2.svg" alt="" style="width: 58px;">
+                    <img src="../images/icons/tasks.svg" alt="" style="width: 32px;">
                     <h3 class="learning-box_title">Upcoming Tasks</h3>
                 </div>
 
@@ -119,8 +108,92 @@
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="meeting">
+                <div class="day-meeting-wrapper">
+
+                    <div class="meeting-wrapper today" id="today-meeting-wrapper">
+                        <h3 class="meeting_date" id="meeting_date-today"></h3>
+                        <!--<div class="meeting-wrapper-item">
+                            <div class="lesson_time-wrapper">
+                                <p class="lesson_time">17:00</p>
+                                <p class="duration">1hr 30min</p>
+                            </div>
+                            
+                            <div class="lesson_subject-wrapper">
+                                <p class="subject">Figma Practice</p>
+                                <p class="group">UI|UX Design Self-Paced</p>
+                            </div>
+                        </div>
+                        <div class="meeting-wrapper-item">
+                            <div class="lesson_time-wrapper">
+                                <p class="lesson_time">17:00</p>
+                                <p class="duration">1hr 30min</p>
+                            </div>
+                            
+                            <div class="lesson_subject-wrapper">
+                                <p class="subject">Figma Practice</p>
+                                <p class="group">UI|UX Design Self-Paced</p>
+                            </div>
+                        </div>
+                        <div class="meeting-wrapper-item">
+                            <div class="lesson_time-wrapper">
+                                <p class="lesson_time">17:00</p>
+                                <p class="duration">1hr 30min</p>
+                            </div>
+                            
+                            <div class="lesson_subject-wrapper">
+                                <p class="subject">Figma Practice</p>
+                                <p class="group">UI|UX Design Self-Paced</p>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="meeting-wrapper" id="tomorrow-meeting-wrapper">
+                        <h3 class="meeting_date" id="meeting_date-tomorrow"></h3>
+                        <!--
+                        <div class="meeting-wrapper-item">
+                            <div class="lesson_time-wrapper">
+                                <p class="lesson_time">17:00</p>
+                                <p class="duration">1hr 30min</p>
+                            </div>
+                            
+                            <div class="lesson_subject-wrapper">
+                                <p class="subject">Figma Practice</p>
+                                <p class="group">UI|UX Design Self-Paced</p>
+                            </div>
+                        </div>
+                        <div class="meeting-wrapper-item">
+                            <div class="lesson_time-wrapper">
+                                <p class="lesson_time">17:00</p>
+                                <p class="duration">1hr 30min</p>
+                            </div>
+                            
+                            <div class="lesson_subject-wrapper">
+                                <p class="subject">Figma Practice</p>
+                                <p class="group">UI|UX Design Self-Paced</p>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="meeting-wrapper" id="day-after-tomorrow-meeting-wrapper">
+                        <h3 class="meeting_date" id="meeting_date-after-tomorrow"></h3>
+                        <!--<div class="meeting-wrapper-item">
+                            <div class="lesson_time-wrapper">
+                                <p class="lesson_time">17:00</p>
+                                <p class="duration">1hr 30min</p>
+                            </div>
+                            
+                            <div class="lesson_subject-wrapper">
+                                <p class="subject">Figma Practice</p>
+                                <p class="group">UI|UX Design Self-Paced</p>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <div class="slider-wrapper hidden">
             <div class="slider" id="slider">
 
@@ -149,6 +222,53 @@
         </div>
 
     </div>
+
+    <div id="active-container">
+        <div class="container">
+            <div class="home_btn">
+                <svg width="12" height="24" viewBox="0 0 12 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 1L1.76316 9.775C1.34816 10.1693 1.34816 10.8307 1.76316 11.225L11 20" stroke="#fff"
+                        stroke-width="1.5" />
+                </svg>
+                <a href="/" class="">Back to My Learning</a>
+            </div>
+
+            <h2 class="active-title">Active Learnings</h2>
+
+            <div class="groups-container">
+                <div class="group-wrapper">
+                    <div class="group-title">
+                        <h3>UI|UX Design Self-Paced [Junior]</h3>
+                        <a href="#" class="primary_btn study">Study</a>
+                        <button class="leave">Leave course</button>
+                    </div>
+
+                    <div class="group-progress">
+                        <a href="#">Course</a>
+                        <span>32% passed</span>
+                        <div class="progress-scale">
+                            <img src="" alt="">
+                            <img src="" alt="">
+                            <img src="" alt="">
+                            <img src="" alt="">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="tasks-container">
+
+    </div>
+
+    <div id="meetings-container">
+
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>

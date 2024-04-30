@@ -33,7 +33,7 @@ td {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 48px;
+    margin-bottom: 8px;
 }
 
 .profile {
@@ -42,16 +42,25 @@ td {
     margin-left: 48px;
 }
 
-.user_name {
+.user_wrapper{
     margin-left: 16px;
-    line-height: 64px;
-    font-size: 24px;
+}
+
+#user_type{
+    color: #9C9C9C;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.user_name {
+    line-height: 30px;
+    font-size: 20px;
 }
 
 .panel {
     margin-right: 48px;
     display: flex;
-    gap: 30px;
+    gap: 16px;
     align-items: center;
 }
 
@@ -59,7 +68,7 @@ td {
     display: flex;
     align-items: center;
     text-align: center;
-    gap: 10px;
+    gap: 16px;
     color: #9C9C9C;
 }
 
@@ -69,7 +78,7 @@ td {
 
 .panel_btn {
     border: 0.5px solid #9C9C9C;
-    padding: 9px 10px 9px 12px;
+    padding: 16px;
     border-radius: 30px;
     transition: all 0.5s;
 }
@@ -84,10 +93,6 @@ td {
 
 .panel_btn:nth-child(2) svg {
     border-radius: 30px;
-}
-
-.panel_btn:hover svg {
-    box-shadow: 0px 4px 20px 0px #5D7CFBB2;
 }
 
 #add_course {
@@ -127,6 +132,12 @@ td {
     position: relative;
 }
 
+.slick-track{
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
 .slick-prev:before {
     content: url('data:image/svg+xml;utf8,<svg width="12" height="21" viewBox="0 0 12 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 1L1.76316 9.775C1.34816 10.1693 1.34816 10.8307 1.76316 11.225L11 20" stroke="%239C9C9C" stroke-width="1.5"/></svg>');
 }
@@ -151,35 +162,45 @@ td {
 .slider-block {
     height: 136px;
     padding: 32px;
-    width: 532px;
-    margin-right: 16px;
+    max-width: 468px;
     background-color: #fff;
     border-radius: 30px;
 }
 
-
-
 .block-title {
-    font-size: 24px;
-    font-weight: 500;
-    color: #4E4E4E;
-    margin-bottom: 23px;
+    font-size: 20px;
+    line-height: 30px;
+    color: #2E2E2E;
 }
 
 .block-sub_title {
-    font-size: 20px;
-    font-weight: 500;
-    color: #0957EF;
-}
-
-.block-end_date {
-    height: 21px;
-    margin-bottom: 45px;
+    font-size: 14px;
+    line-height: 21px;
+    color: #5D7CFB;
 }
 
 .progress_placeholder {
     display: inline-block;
+    color: #4E4E4E;
     margin-bottom: 8px;
+}
+
+.btn-link{
+    background-color: transparent;
+    max-width: 152px;
+    line-height: 56px;
+    padding: 0 16px;
+    border: 1px solid #5D7CFB;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 20px;
+    margin-top: 22px;
+    transition: all 0.5s;
+}
+
+.btn-link:hover{
+    box-shadow: 0px 3px 15px 0px #5D7CFBB2;
 }
 
 .progress_scale_placeholder {
@@ -241,32 +262,43 @@ td {
 }
 
 .box-item {
-    border-bottom: 1px solid #EEE;
     padding: 4px 32px;
     color: #5D7CFB;
 }
 
-#box-item-overdue .box-item:first-child,
-#box-item-upcoming .box-item:first-child {
-    border-top: 1px solid #EEE;
+#box-item-overdue {
+    max-height: 187px;
 }
 
-.task-box-title {
+.box {
     text-align: center;
     color: #4E4E4E;
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.task-box-title{
+    text-align: center;
+}
+
+.box-item-wrapper{
+    border-top: 1px solid #EEE;
+    overflow-y: scroll;
 }
 
 .box-item_title {
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 12px;
+    line-height: 18px;
     color: #4E4E4E;
 }
 
 .box-item_dueDate {
+    font-size: 10px;
+    line-height: 15px;
+}
+
+.overdue .box-item_dueDate {
     color: #FF5756;
-    font-size: 14px;
-    line-height: 21px;
 }
 
 #add_box {
@@ -333,18 +365,21 @@ input:not(:placeholder-shown)+span {
 
 .grid-box {
     display: grid;
-    grid-template-columns: 1.22fr 1.22fr 1fr;
-    grid-template-rows: 1.67fr 1fr;
+    grid-template-columns: 376px 376px 298px;
+    grid-template-rows: 1.42fr 1fr;
     grid-column-gap: 16px;
     grid-row-gap: 16px;
+    margin-bottom: 16px;
 }
 
-.calendar {
+.calendar-wrapper {
     grid-area: 1 / 1 / 2 / 2;
+    max-height: 268px;
 }
 
 .overdue {
     grid-area: 1 / 2 / 2 / 3;
+    max-height: 320px;
 }
 
 .meeting {
@@ -391,4 +426,58 @@ input:not(:placeholder-shown)+span {
 .upcoming{
     background-color: #fff;
     border-radius: 30px;
+}
+
+.meeting {
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 8px;
+}
+
+.day-meeting-wrapper{
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.meeting-wrapper-item{
+    display: flex;
+    gap: 24px;
+    margin-bottom: 9px;
+}
+
+.meeting-wrapper{
+    width: 256px;
+    padding: 16px 24px;
+    border-radius: 30px;
+    height: 176px;
+}
+
+.meeting .group{
+    color: #9C9C9C;
+}
+
+.meeting .lesson_time{
+    color: #5D7CFB;
+}
+
+.today{
+    background-color: #5D7CFB;
+    color: #fff;
+}
+
+.today .lesson_time{
+    color: #fff;
+}
+
+.today .group,
+.today .duration{
+    color: #BAC8FF;
+}
+
+.meeting_date{
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 16px;
 }

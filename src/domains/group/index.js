@@ -3,12 +3,12 @@ const routes = express.Router();
 
 const {
   create_group,
-  add_subject
+  add_task,
+  add_meeting
 } = require("./controller");
 
 routes.post("/create_group", create_group);
-routes.post("/add_subject", add_subject);
-
-
+routes.post("/add_task", add_task);
+routes.post("/add_meeting", add_meeting);
 
 module.exports = routes;

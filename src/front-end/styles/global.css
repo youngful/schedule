@@ -138,6 +138,10 @@ a{
     text-decoration: none;
 }
 
+button{
+    background-color: transparent;
+}
+
 .logo{
     width: 127px;
     position: absolute;
