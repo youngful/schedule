@@ -16,7 +16,7 @@
 
 <body>
 
-    <div class="container hidden" id="container">
+    <div class="container " id="container">
         <div class="header">
             <div class="profile">
                 <img src="../images/icons/profile-icon.svg" alt="" style="width: 96px;">
@@ -223,38 +223,42 @@
 
     </div>
 
-    <div id="active-container">
+    <div id="active-container" class="hidden">
         <div class="container">
-            <div class="home_btn">
-                <svg width="12" height="24" viewBox="0 0 12 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 1L1.76316 9.775C1.34816 10.1693 1.34816 10.8307 1.76316 11.225L11 20" stroke="#fff"
-                        stroke-width="1.5" />
-                </svg>
-                <a href="/" class="">Back to My Learning</a>
-            </div>
+                
+                <a href="/" class="home_btn">
+                    <svg width="12" height="24" viewBox="0 0 12 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 1L1.76316 9.775C1.34816 10.1693 1.34816 10.8307 1.76316 11.225L11 20" stroke="#fff"
+                            stroke-width="1.5" />
+                    </svg>
+                    <span>Back to My Learning</span>
+                </a>
 
             <h2 class="active-title">Active Learnings</h2>
 
             <div class="groups-container">
-                <div class="group-wrapper">
-                    <div class="group-title">
-                        <h3>UI|UX Design Self-Paced [Junior]</h3>
-                        <a href="#" class="primary_btn study">Study</a>
-                        <button class="leave">Leave course</button>
+                <!-- <div class="group-wrapper">
+                    <div class="group-info">
+                        <h3 class="group-title">UI|UX Design Self-Paced [Junior]</h3>
+                        <div class="group-info-btns">
+                            <a href="#" class="study">Study</a>
+                            <button class="leave">Leave course</button>
+                        </div>
                     </div>
 
                     <div class="group-progress">
-                        <a href="#">Course</a>
-                        <span>32% passed</span>
+                        <a class="course-btn" href="#">Course</a>
                         <div class="progress-scale">
-                            <img src="" alt="">
-                            <img src="" alt="">
-                            <img src="" alt="">
-                            <img src="" alt="">
-                            <img src="" alt="">
+                            <span class="progress-percent">32% passed</span>
+                            <span class="progress-scale-item"> </span>
+                            <span class="progress-scale-item"> </span>
+                            <span class="progress-scale-item"> </span>
+                            <span class="progress-scale-item"> </span>
+                            <span class="progress-scale-item"> </span>
+                            <span class="progress-scale-item"> </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>

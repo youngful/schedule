@@ -14,6 +14,9 @@ const taskSchema = new mongoose.Schema({
         type: Number,
         min: 0,
         max: 100
+    },
+    lastUpdate:{
+        type: Date,
     }
 
 });

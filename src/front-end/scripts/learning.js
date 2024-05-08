@@ -224,6 +224,92 @@ function addMeetingsToSchedule(dataArray) {
     }
 }
 
+function addGroupsToContainer(dataArray) {
+    console.log(dataArray);
+    
+    var groupsContainer = document.querySelector('.groups-container');
+    dataArray.forEach(groups => {
+        const groupTitle = groups.nameGroup;
+        const groupProgress = 50;
+
+        const newGroup = createGroup(groupTitle, groupProgress);
+        groupsContainer.appendChild(newGroup);
+    });
+}
+
+function createGroup(title, progress) {
+    // Створюємо елементи
+    var groupWrapper = document.createElement('div');
+    groupWrapper.classList.add('group-wrapper');
+
+    var groupInfo = document.createElement('div');
+    groupInfo.classList.add('group-info');
+
+    var groupTitle = document.createElement('h3');
+    groupTitle.classList.add('group-title');
+    groupTitle.textContent = title;
+
+    var groupInfoBtns = document.createElement('div');
+    groupInfoBtns.classList.add('group-info-btns');
+
+    var studyLink = document.createElement('a');
+    studyLink.href = '#';
+    studyLink.classList.add('study');
+    studyLink.textContent = 'Study';
+
+    var leaveButton = document.createElement('button');
+    leaveButton.classList.add('leave');
+    leaveButton.textContent = 'Leave course';
+
+    groupInfoBtns.appendChild(studyLink);
+    groupInfoBtns.appendChild(leaveButton);
+
+    groupInfo.appendChild(groupTitle);
+    groupInfo.appendChild(groupInfoBtns);
+
+    var groupProgress = document.createElement('div');
+    groupProgress.classList.add('group-progress');
+
+    var courseLink = document.createElement('a');
+    courseLink.href = '#';
+    courseLink.classList.add('course-btn');
+    courseLink.textContent = 'Course';
+
+    var progressScale = document.createElement('div');
+    progressScale.classList.add('progress-scale');
+
+    var progressPercent = document.createElement('span');
+    progressPercent.classList.add('progress-percent');
+    progressPercent.textContent = `${progress}% passed`;
+
+    progressScale.appendChild(progressPercent);
+
+    var numCircles = Math.floor(parseInt(progress) / 100 * 6);
+
+    var progressScaleItems = [];
+    for (var i = 0; i < 6; i++) {
+        var progressScaleItem = document.createElement('span');
+        progressScaleItem.classList.add('progress-scale-item');
+
+        if (i < numCircles) {
+            progressScaleItem.classList.add('passed');
+        }
+
+        progressScale.appendChild(progressScaleItem);
+        progressScaleItems.push(progressScaleItem);
+    }
+
+    groupProgress.appendChild(courseLink);
+    groupProgress.appendChild(progressScale);
+
+    groupWrapper.appendChild(groupInfo);
+    groupWrapper.appendChild(groupProgress);
+
+    return groupWrapper;
+}
+
+
+
 function addSliderBlocks(dataArray) {
     const slider = document.getElementById('slider');
     const active_counter_field = document.getElementById('active_counter');
@@ -464,15 +550,17 @@ function panelController(id){
         container.style.display = "none";
     }else if(id === 'active'){
         container.style.display = "none";
+        addGroupsToContainer(window.userData);
+
         active.style.display = "block"
     }else if(id === 'meetings'){
         container.style.display = "none";
     }
 }
 
-
+fetchUserData();
 generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 updateTodayText();
-fetchUserData();
+
 
 

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $(document).ready(function() {
     function loadDefaultContent() {
-        var defaultUrl = '/learning'; // URL сторінки профілю
+        var defaultUrl = '/dashboard';
         loadContent(defaultUrl);
     }
 
