@@ -1,13 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
     <title>Schedule</title>
 </head>
-<body>
-    <h2>Dashboard</h2>
-    <p>Тут може бути інформація про навчання, завдання тощо.</p>
 
+<body>
+
+    <div class="container">
+
+        <div class="task-grid">
+
+            <div class="progress-wrapper">
+                <div class="progress-header">
+                    <h3 class="progress-title title">Progress</h3>
+                    <span id="progressAVG" class="progress">70</span>
+                    <div class="custom-select">
+                        <span class="selected-option" id="dropdownToggle">Last month</span><img
+                            src="../images/icons/dropArrowDown.svg" alt="arrow" id="arrowIcon">
+                        <ul class="options">
+                            <li data-value="3">Last 3 days</li>
+                            <li data-value="7">Last week</li>
+                            <li data-value="30">Last month</li>
+                            <li data-value="90">Last quarter</li>
+                            <li data-value="365">Last year</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grade-wrapper">
+
+                </div>
+            </div>
+
+            <div class="lastGrades">
+                <h3 class="lastGrade-title title">Latest grades</h3>
+                <div class="lastGrade-wrapper">
+                    <!-- <div class="lastGrade">
+                        <p class="lastGrade-name">Figma Practice</p>
+                        <span class="lastGrade-progress">100</span>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="schedule">
+
+                <div class="schedule-header">
+                    <h3 class="title schedule-title">Schedule</h3>
+
+                    <div class="selectDate-slider">
+                        <button  id="prevDate"><img src="../images/icons/calendar-left-arrow.svg" alt=""></button>
+                        <span class="selected_date">Mon, Apr 1</span>
+                        <button  id="nextDate"><img src="../images/icons/calendar-right-arrow.svg" alt=""></button>
+                    </div>
+                </div>
+
+                <div class="schedule-content">
+
+                    <div class="schedule-content-item">
+                        <div class="schedule-name_info">
+                            <p class="schedule-task_name">Figma Mistakes</p>
+                            <p class="schedule-group_name">UI|UX Design Self-Paced</p>
+                        </div>
+
+                        <div class="schedule-time_info">
+                            <p class="schedule-task_start">12:00</p>
+                            <p class="schedule-task_duration">1hr</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="task-wrapper">
+            <div class="task-header">
+                <h3 class="task-title title">Tasks</h3>
+                
+                <div class="custom-select">
+                    <span class="selected-option" id="dropdownToggleTasks">3 days</span><img
+                        src="../images/icons/dropArrowDown.svg" alt="arrow" id="arrowIconTasks">
+                    <ul class="options options_tasks">
+                        <li data-value="3">3 days</li>
+                        <li data-value="7">Week</li>
+                        <li data-value="30">Month</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grade-wrapper">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../scripts/dashboard.js"></script>
 </body>
+
 </html>

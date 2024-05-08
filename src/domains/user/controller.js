@@ -8,6 +8,7 @@ const path = require('path');
 const { promisify } = require('util');
 const mkdirAsync = promisify(fs.mkdir);
 const nodemailer = require("nodemailer");
+const { group } = require("console");
 
 // handle errors
 const handleErrors = (err) => {
@@ -71,8 +72,17 @@ module.exports.get_info = async (req, res) => {
                 phone: user.phone,
                 name: user.firstName,
                 lastName: user.lastName,
-                file: user.file
+                file: user.file,
+                tasks: user.tasks,
+                groups: []
             };
+
+            for(let code of user.personalCode){
+                let containeGroup = await Group.findOne({code: code})
+                if(containeGroup){
+                    userData.groups.push(containeGroup);
+                }
+            }
 
             res.json(userData);
         } catch (error) {

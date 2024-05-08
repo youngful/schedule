@@ -41,12 +41,33 @@
     padding: 32px;
     display: flex;
     justify-content: space-between;
+    border: 1px solid #9C9C9C;
+    border-radius: 30px;
+    margin-bottom: 47px;
+}
 
+.group-title {
+    margin-bottom: 16px;
+}
+
+.group-info-btns {
+    display: flex;
+    height: 48px;
+    gap: 16px;
 }
 
 .study {
     padding: 8px 52px;
+    background: #5D7CFB;
+    color: #fff;
+    border-radius: 20px;
+    line-height: 30px;
+    border: none;
+    transition: all 0.5s;
+}
 
+.study:hover {
+    box-shadow: 0px 4px 20px 0px #5D7CFBB2;
 }
 
 .leave {
@@ -56,8 +77,48 @@
     border: 1px solid #5D7CFB;
     border-radius: 20px;
     transition: all 0.5s;
+    padding: 8px 52px;
 }
 
 .leave:hover {
     box-shadow: 0px 3px 15px 0px #5D7CFBB2;
+}
+
+.group-progress {
+    text-align: right;
+}
+
+.course-btn {
+    max-width: 150px;
+    display: inline-block;
+    background-color: #BAC8FF;
+    padding: 0 52px;
+    line-height: 48px;
+    border-radius: 20px;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.progress-scale-item {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-color: #EEE;
+    border-radius: 50%;
+}
+
+.passed{
+    background-color: #BAC8FF;
+}
+
+.progress-scale {
+    position: relative;
+    display: flex;
+    gap: 24px;
+}
+
+.progress-percent {
+    position: absolute;
+    top: -25px;
+    left: 0;
 }
