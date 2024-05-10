@@ -35,6 +35,8 @@
                 <div class="grade-wrapper">
 
                 </div>
+
+                <p class="hidden message" id="no-grades">No Grades</p>
             </div>
 
             <div class="lastGrades">
@@ -53,9 +55,9 @@
                     <h3 class="title schedule-title">Schedule</h3>
 
                     <div class="selectDate-slider">
-                        <button  id="prevDate"><img src="../images/icons/calendar-left-arrow.svg" alt=""></button>
+                        <button id="prevDate"><img src="../images/icons/calendar-left-arrow.svg" alt=""></button>
                         <span class="selected_date">Mon, Apr 1</span>
-                        <button  id="nextDate"><img src="../images/icons/calendar-right-arrow.svg" alt=""></button>
+                        <button id="nextDate"><img src="../images/icons/calendar-right-arrow.svg" alt=""></button>
                     </div>
                 </div>
 
@@ -78,29 +80,65 @@
             </div>
         </div>
 
-        <div class="task-wrapper">
-            <div class="task-header">
-                <h3 class="task-title title">Tasks</h3>
-                
-                <div class="custom-select">
-                    <span class="selected-option" id="dropdownToggleTasks">3 days</span><img
-                        src="../images/icons/dropArrowDown.svg" alt="arrow" id="arrowIconTasks">
-                    <ul class="options options_tasks">
-                        <li data-value="3">3 days</li>
-                        <li data-value="7">Week</li>
-                        <li data-value="30">Month</li>
-                    </ul>
+        <div class="group-grid">
+            <div class="task-wrapper">
+                <div class="task-header">
+                    <h3 class="task-title title">Tasks</h3>
+
+                    <div class="custom-select">
+                        <span class="selected-option" id="dropdownToggleTasks">3 days</span><img
+                            src="../images/icons/dropArrowDown.svg" alt="arrow" id="arrowIconTasks">
+                        <ul class="options options_tasks">
+                            <li data-value="3">3 days</li>
+                            <li data-value="7">Week</li>
+                            <li data-value="30">Month</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="task-container">
+
+                </div>
+
+                <p class="hidden message" id="no-tasks">No Tasks</p>
+
+            </div>
+
+            <div class="group-wrapper">
+                <div class="group-item">
+                    <div class="group-info">
+                        <div class="group-name-info">
+                            <p class="group-name">UI|UX Design Self-Paced</p>
+                            <p class="group-type">Course for [Junior]</p>
+                        </div>
+                        <div class="group-content-info">
+                            <p class="group-activity">15 Tasks • 3 Meetings </p>
+                            <p class="group-AVG">Average grade: <span class="progress">70</span></p>
+                        </div>
+                    </div>
+
+                    <div class="group-progress">
+                        <div class="group-percent">
+                            <p class="percent-text">85% of tasks passed</p>
+                            <div class="percent-scale">
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                            </div>
+                        </div>
+
+                        <a href="#"><img src="../images/icons/button-arrow-right.svg" alt="" style="width: 32px;"></a>
+                    </div>
                 </div>
             </div>
 
-            <div class="grade-wrapper">
-
-            </div>
         </div>
-    </div>
 
 
-    <script src="../scripts/dashboard.js"></script>
+        <script src="../scripts/dashboard.js"></script>
 </body>
 
 </html>

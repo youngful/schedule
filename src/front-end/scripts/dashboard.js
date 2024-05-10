@@ -2,7 +2,6 @@ window.userData = null;
 
 async function userInfo() {
     try {
-
         const response = await fetch('http://localhost:3001/user/get_info', {
             credentials: 'include'
         });
@@ -13,14 +12,16 @@ async function userInfo() {
 
         window.userData = await response.json();
         console.log(window.userData);
+
         fillGrades();
+        filterTasks(3);
+        createGroupItems();
         updateProgressBackground();
 
     } catch (error) {
         console.error('Error fetching user info:', error);
     }
 }
-
 
 var dropdownToggle = document.getElementById('dropdownToggle');
 var dropdownToggleTasks = document.getElementById('dropdownToggleTasks');
@@ -32,7 +33,7 @@ var optionsListTasks = document.querySelector('.options_tasks');
 var selectedValue = 30;
 
 function toggleOptionsList(optionsList, arrowIcon) {
-    return function() {
+    return function () {
         optionsList.classList.toggle('show');
         arrowIcon.src = optionsList.classList.contains('show') ? '../images/icons/dropArrowUp.svg' : '../images/icons/dropArrowDown.svg';
     };
@@ -49,7 +50,7 @@ optionsList.addEventListener('click', function (event) {
         selectedValue = event.target.dataset.value;
         dropdownToggle.textContent = event.target.textContent;
         optionsList.classList.remove('show');
-        fillGrades();
+        fillGrades(selectedValue);
         updateProgressBackground();
         arrowIcon.src = '../images/icons/dropArrowDown.svg';
         console.log('Selected value:', selectedValue);
@@ -61,6 +62,7 @@ optionsListTasks.addEventListener('click', function (event) {
         selectedValue = event.target.dataset.value;
         dropdownToggleTasks.textContent = event.target.textContent;
         optionsListTasks.classList.remove('show');
+        filterTasks(selectedValue)
         arrowIconTasks.src = '../images/icons/dropArrowDown.svg';
         console.log('Selected value:', selectedValue);
     }
@@ -68,17 +70,16 @@ optionsListTasks.addEventListener('click', function (event) {
 
 function updateProgressBackground() {
     var progressElements = document.querySelectorAll('.progress');
-    var lastGradeProgressElements = document.querySelectorAll('.lastGrade');
 
     progressElements.forEach(function (element) {
-        var progressValue = parseInt(element.innerText);
-        if (progressValue == 0) {
+        var progressValue = element.innerText;
+        if (progressValue == "0" || progressValue == "N/A") {
             element.style.backgroundColor = '#eee';
             element.style.color = '#000';
-        } else if (progressValue >= 88) {
+        } else if (progressValue >= "88") {
             element.style.backgroundColor = '#DBF4E8';
             element.style.color = '#29B76C';
-        } else if (progressValue < 71) {
+        } else if (progressValue < "71") {
             element.style.backgroundColor = '#FFE2E3';
             element.style.color = '#FF5756';
         } else {
@@ -88,7 +89,7 @@ function updateProgressBackground() {
     });
 }
 
-function fillGrades() {
+function fillGrades(selectedValue) {
     const container = document.querySelector(".grade-wrapper");
     const lastGradesContainer = document.querySelector(".lastGrade-wrapper");
     const tasks = window.userData.tasks;
@@ -145,6 +146,8 @@ function fillGrades() {
         const differenceInTime = currentDate - lastUpdateDate;
         const differenceInDays = differenceInTime / (1000 * 3600 * 24);
 
+        // console.log(differenceInDays);
+
         if (differenceInDays <= selectedDays) {
             if (counter > 36) {
                 return;
@@ -157,9 +160,19 @@ function fillGrades() {
             counter++;
         }
     })
-
+    
     const averageGrade = AVG / counter;
     progressAVG.innerHTML = Number.isInteger(averageGrade) ? averageGrade.toFixed(0) : averageGrade.toFixed(1);
+
+    const message = document.querySelector("#no-grades");
+    
+    if(container.innerHTML === ''){
+        progressAVG.innerHTML = "0";
+        message.classList.remove("hidden");
+    }else{
+        message.classList.add("hidden");
+    }
+
 }
 
 
@@ -167,7 +180,7 @@ const prevDateButton = document.getElementById('prevDate');
 const nextDateButton = document.getElementById('nextDate');
 const selectedDateElement = document.querySelector('.selected_date');
 
-let selectedDate = new Date();
+selectedDate = new Date();
 
 function updateSelectedDate() {
     const options = { weekday: 'short', month: 'short', day: 'numeric' };
@@ -214,7 +227,7 @@ function createScheduleContentItem(task) {
 
     const taskGroupName = document.createElement('p');
     taskGroupName.classList.add('schedule-group_name');
-    
+
     let taskGroupNameText = '';
     window.userData.groups.forEach(group => {
         group.tasks.forEach(groupTask => {
@@ -223,7 +236,7 @@ function createScheduleContentItem(task) {
             }
         });
     });
-    
+
     taskGroupName.textContent = taskGroupNameText;
 
     nameInfo.appendChild(taskName);
@@ -240,7 +253,9 @@ function createScheduleContentItem(task) {
 
     const taskDuration = document.createElement('p');
     taskDuration.classList.add('schedule-task_duration');
-    taskDuration.textContent = "1hr 30min"; // Додайте потрібне поле з об'єкту завдання
+    taskDuration.textContent = "1hr 30min";
+
+
 
     timeInfo.appendChild(taskStart);
     timeInfo.appendChild(taskDuration);
@@ -251,6 +266,217 @@ function createScheduleContentItem(task) {
     return item;
 }
 
+function filterTasks(selectedValue) {
+    const tasks = window.userData.tasks;
+    
+    const taskContainer = document.querySelector('.task-container');
+    taskContainer.innerHTML = '';
+
+    const currentDate = new Date();
+
+    tasks.forEach(task => {
+        
+        const differenceInTime = currentDate - new Date(task.date);
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        
+        if (differenceInDays < 1 && (-1 * differenceInDays) <= selectedValue) {
+            const item = createTaskContainerItem(task);
+            taskContainer.appendChild(item);
+        }
+    });
+    const message = document.querySelector("#no-tasks");
+    
+    if(taskContainer.innerHTML === ''){
+        message.classList.remove("hidden");
+    }else{
+        message.classList.add("hidden");
+    }
+    
+}
+
+function createTaskContainerItem(task) {
+
+    const item = document.createElement('div');
+    item.classList.add('task-container-item');
+
+    const itemInfo = document.createElement('div');
+    itemInfo.classList.add('item-info');
+
+    const itemName = document.createElement('p');
+    itemName.classList.add('item-name');
+    itemName.textContent = task.name;
+
+    const itemGroup = document.createElement('p');
+    itemGroup.classList.add('item-group');
+    itemGroup.textContent = task.groupName;
+
+    itemInfo.appendChild(itemName);
+    itemInfo.appendChild(itemGroup);
+
+    const itemTime = document.createElement('div');
+    itemTime.classList.add('item-time');
+
+    const itemGrade = document.createElement('p');
+    itemGrade.classList.add('item-grade');
+    if(task.grade == undefined){
+        itemGrade.textContent = "N/A";
+    }else{
+        itemGrade.textContent = task.grade + " points";
+    }
+
+    const itemDate = document.createElement('p');
+    itemDate.classList.add('item-date');
+    itemDate.textContent = "Due " + formatDate(task.date);
+
+    itemTime.appendChild(itemGrade);
+    itemTime.appendChild(itemDate);
+
+    item.appendChild(itemInfo);
+    item.appendChild(itemTime);
+
+    return item;
+}
+
+function formatDate(date) {
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
+    return new Date(date).toLocaleDateString('en-US', options);
+}
+
+function populateTaskContainer(tasks) {
+    const container = document.querySelector('.task-container');
+    container.innerHTML = ''; // Очищаємо контейнер перед додаванням нових елементів
+
+    tasks.forEach(task => {
+        const item = createTaskContainerItem(task);
+        container.appendChild(item);
+    });
+}
+
+
+function createGroupItems() {
+    const groupWrapper = document.querySelector('.group-wrapper');
+
+    groupWrapper.innerHTML = '';
+
+    const groups = window.userData.groups;
+
+    groups.forEach(group => {
+        const groupItem = document.createElement('div');
+        groupItem.classList.add('group-item');
+
+        const groupInfo = document.createElement('div');
+        groupInfo.classList.add('group-info');
+
+        const groupNameInfo = document.createElement('div');
+        groupNameInfo.classList.add('group-name-info');
+
+        const groupName = document.createElement('p');
+        groupName.classList.add('group-name');
+        groupName.textContent = group.name;
+
+        const groupType = document.createElement('p');
+        groupType.classList.add('group-type');
+        groupType.textContent = `Course for [student]`;
+
+        groupNameInfo.appendChild(groupName);
+        groupNameInfo.appendChild(groupType);
+
+        const groupContentInfo = document.createElement('div');
+        groupContentInfo.classList.add('group-content-info');
+
+        const groupActivity = document.createElement('p');
+        groupActivity.classList.add('group-activity');
+        groupActivity.textContent = `${group.tasks.length} Tasks • ${group.meetings.length} Meetings`;
+
+        const groupAVG = document.createElement('p');
+        groupAVG.classList.add('group-AVG');
+        groupAVG.innerHTML = `Average grade: <span class="progress">${calculateAverageGrade(group.tasks)}</span>`;
+
+        groupContentInfo.appendChild(groupActivity);
+        groupContentInfo.appendChild(groupAVG);
+
+        groupInfo.appendChild(groupNameInfo);
+        groupInfo.appendChild(groupContentInfo);
+
+        const groupProgress = document.createElement('div');
+        groupProgress.classList.add('group-progress');
+
+        const groupPercent = document.createElement('div');
+        groupPercent.classList.add('group-percent');
+
+        const percentText = document.createElement('p');
+        percentText.classList.add('percent-text');
+        percentText.textContent = calculateCompletionPercentage(group.tasks);
+
+        const percentScale = document.createElement('div');
+        percentScale.classList.add('percent-scale');
+
+        const passedCircleCount = Math.ceil(parseInt(percentText.textContent) / 100 * 6);
+        for (let i = 0; i < 6; i++) {
+            const circle = document.createElement('span');
+            circle.classList.add('circle');
+            if (i < passedCircleCount) {
+                circle.classList.add('passed');
+            }
+            percentScale.appendChild(circle);
+        }
+
+        groupPercent.appendChild(percentText);
+        groupPercent.appendChild(percentScale);
+
+        const arrowLink = document.createElement('a');
+        arrowLink.href = '#';
+        const arrowIcon = document.createElement('img');
+        arrowIcon.src = '../images/icons/button-arrow-right.svg';
+        arrowIcon.alt = '';
+        arrowIcon.style.width = '32px';
+        arrowLink.appendChild(arrowIcon);
+
+        groupProgress.appendChild(groupPercent);
+        groupProgress.appendChild(arrowLink);
+
+        groupItem.appendChild(groupInfo);
+        groupItem.appendChild(groupProgress);
+
+        groupWrapper.appendChild(groupItem);
+    });
+}
+
+function calculateAverageGrade(groupTasks) {
+    const userDataTasks = window.userData.tasks;
+    const relevantTasks = userDataTasks.filter(userTask => {
+        return groupTasks.some(groupTask => groupTask.name === userTask.name);
+    });
+
+    const gradedTasks = relevantTasks.filter(task => task.grade > 0);
+
+    if (gradedTasks.length === 0) return 'N/A'; 
+    
+    console.log(gradedTasks.length);
+
+
+    const totalGrade = relevantTasks.reduce((acc, task) => acc + task.grade, 0);
+    return Math.round(totalGrade / relevantTasks.length);
+}
+
+
+function calculateCompletionPercentage(groupTasks) {
+    const userDataTasks = window.userData.tasks;
+    const relevantTasks = userDataTasks.filter(userTask => {
+        return groupTasks.some(groupTask => groupTask.name === userTask.name);
+    });
+
+    const gradedTasks = relevantTasks.filter(task => task.grade > 0);
+    const completedTasksCount = gradedTasks.length;
+    
+    if(completedTasksCount === 0) {
+        return `0% of tasks passed`;
+    } else {
+        const totalTasksCount = relevantTasks.length;
+        const completionPercentage = (completedTasksCount / totalTasksCount) * 100;
+        return `${Math.round(completionPercentage)}% of tasks passed`;
+    }
+}
 
 updateSelectedDate();
 
