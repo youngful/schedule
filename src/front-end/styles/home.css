@@ -73,7 +73,7 @@ a{
 }
 
 .content{
-    margin: 10px auto 0;
+    margin: 10px auto 0px;
     padding: 5px ;
     height: fit-content;
 }

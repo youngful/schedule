@@ -132,6 +132,10 @@ td {
     position: relative;
 }
 
+.slider-wrapper{
+    margin-bottom: 16px;
+}
+
 .slick-track{
     display: flex;
     justify-content: space-between;
@@ -452,6 +456,7 @@ input:not(:placeholder-shown)+span {
     padding: 16px 24px;
     border-radius: 30px;
     height: 176px;
+    overflow-y: scroll;
 }
 
 .meeting .group{

@@ -1,4 +1,5 @@
 window.userData = null;
+window.user = null;
 
 async function userInfo() {
     try {
@@ -12,12 +13,13 @@ async function userInfo() {
         }
 
         const userData = await response.json();
+        window.user = userData;
 
         const userType = document.getElementById("user_type");
         const userName = document.getElementById("user_name");
 
-        userType.textContent = userData.type; 
-        userName.textContent = `${userData.name} ${userData.lastName}`; 
+        userType.textContent = userData.type;
+        userName.textContent = `${userData.name} ${userData.lastName}`;
 
     } catch (error) {
         console.error('Error fetching user info:', error);
@@ -115,14 +117,13 @@ function addMeetingsToSchedule(dataArray) {
     const allMeetings = [];
     for (const group of dataArray) {
         for (const meeting of group.meetings) {
-            meeting.groupName = group.nameGroup; 
+            meeting.groupName = group.nameGroup;
             allMeetings.push(meeting);
         }
     }
 
     meeting_field.textContent = allMeetings.length;
-    console.log(allMeetings);
-    
+
     // Сортуємо зустрічі по даті в зростаючому порядку
     allMeetings.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -174,7 +175,7 @@ function addMeetingsToSchedule(dataArray) {
         const lessonTime = document.createElement('p');
         lessonTime.classList.add('lesson_time');
         lessonTime.textContent = `${meetingDate.getHours()}:${meetingDate.getMinutes() < 10 ? '0' + meetingDate.getMinutes() : meetingDate.getMinutes()}`;
-        
+
         const lessonDuration = document.createElement('p');
         lessonDuration.classList.add('duration');
         lessonDuration.textContent = "30min";
@@ -224,17 +225,39 @@ function addMeetingsToSchedule(dataArray) {
     }
 }
 
-function addGroupsToContainer(dataArray) {
-    console.log(dataArray);
-    
+function addGroupsToContainer(userData) {
     var groupsContainer = document.querySelector('.groups-container');
-    dataArray.forEach(groups => {
-        const groupTitle = groups.nameGroup;
-        const groupProgress = 50;
+    userData.forEach(group => {
+        const groupTitle = group.nameGroup;
+        const groupProgress = calculateGroupCompletionPercentage(group);
 
         const newGroup = createGroup(groupTitle, groupProgress);
         groupsContainer.appendChild(newGroup);
     });
+}
+
+function calculateGroupCompletionPercentage(group) {
+    const userDataTasks = window.user.tasks;
+    const relevantTasks = [];
+
+    group.tasks.forEach(groupTask => {
+        userDataTasks.forEach(userTask => {
+            if (groupTask.name === userTask.name) {
+                relevantTasks.push(userTask);
+            }
+        });
+    });
+
+    const gradedTasks = relevantTasks.filter(task => task.grade > 0);
+    const completedTasksCount = gradedTasks.length;
+
+    const completedTasksPercent = completedTasksCount / group.tasks.length * 100;
+
+    console.log(completedTasksPercent);
+    
+
+
+    return completedTasksPercent;
 }
 
 function createGroup(title, progress) {
@@ -308,8 +331,6 @@ function createGroup(title, progress) {
     return groupWrapper;
 }
 
-
-
 function addSliderBlocks(dataArray) {
     const slider = document.getElementById('slider');
     const active_counter_field = document.getElementById('active_counter');
@@ -346,8 +367,6 @@ function addSliderBlocks(dataArray) {
                 group.tasks.forEach(task => {
                     completedTasks += group.tasks.filter(task => task.grade !== undefined).length;
                 });
-
-                console.log(completedTasks);
 
                 let progress = (completedTasks / totalTasks) * 100;
 
@@ -542,18 +561,18 @@ document.getElementById('nextMonth').addEventListener('click', () => {
     updateCalendar();
 });
 
-function panelController(id){
+function panelController(id) {
     const container = document.getElementById('container');
     const active = document.getElementById('active-container')
 
-    if(id === 'tasks'){
+    if (id === 'tasks') {
         container.style.display = "none";
-    }else if(id === 'active'){
+    } else if (id === 'active') {
         container.style.display = "none";
         addGroupsToContainer(window.userData);
 
         active.style.display = "block"
-    }else if(id === 'meetings'){
+    } else if (id === 'meetings') {
         container.style.display = "none";
     }
 }

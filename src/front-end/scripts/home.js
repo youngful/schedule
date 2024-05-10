@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $(document).ready(function() {
     function loadDefaultContent() {
-        var defaultUrl = '/dashboard';
+        var defaultUrl = '/learning';
+        // var defaultUrl = '/dashboard';
         loadContent(defaultUrl);
     }
 
